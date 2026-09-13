@@ -78,11 +78,13 @@ window.GALLERY_FOLDERS = {
   
       try {
         // Fetch all folders simultaneously for maximum speed
-        const fetchPromises = idsToFetch.map(fId => 
-          fetch('/api/gallery?folderId=' + fId).then(res => res.ok ? res.json() : [])
-        );
-        const results = await Promise.all(fetchPromises);
-        results.forEach(data => allImages = allImages.concat(data));
+        for (const fId of idsToFetch) {
+          const res = await fetch('/api/gallery?folderId=' + fId);
+          if (res.ok) {
+            const data = await res.json();
+            allImages = allImages.concat(data);
+          }
+        }
   
         // Shuffle the 'all' array so different events are mixed beautifully
         if (category === 'all') {
