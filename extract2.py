@@ -1,0 +1,28 @@
+﻿import json
+import codecs
+
+longest = ''
+with codecs.open('recovered_all.txt', 'r', encoding='utf-16') as f:
+    for line in f:
+        line = line.strip()
+        if not line: continue
+        try:
+            data = json.loads(line)
+            if 'tool_calls' in data:
+                for tc in data['tool_calls']:
+                    args = tc.get('arguments', {})
+                    if 'ReplacementContent' in args and 'tl-cards' in args['ReplacementContent']:
+                        if len(args['ReplacementContent']) > len(longest):
+                            longest = args['ReplacementContent']
+                    elif 'CodeContent' in args and 'tl-cards' in args['CodeContent']:
+                        if len(args['CodeContent']) > len(longest):
+                            longest = args['CodeContent']
+        except Exception as e:
+            pass
+
+if longest:
+    with codecs.open('recovered_schedule.html', 'w', encoding='utf-8') as f:
+        f.write(longest)
+    print("Saved to recovered_schedule.html!")
+else:
+    print("Not found.")

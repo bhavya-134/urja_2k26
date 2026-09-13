@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -17,28 +17,19 @@
 
 <!-- LOADER -->
 <div id="loader">
-  <canvas id="loader-canvas"></canvas>
-  <div id="loader-content">
-    <div id="loader-logo">
-      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle id="lc-ring" cx="60" cy="60" r="54" stroke="#F2B33D" stroke-width="1.5" stroke-dasharray="339" stroke-dashoffset="339"/>
-        <path id="lc-bolt" d="M68,28 L44,62 L60,62 L52,92 L76,58 L60,58 Z" fill="none" stroke="#FF8A00" stroke-width="2" stroke-linejoin="round" opacity="0"/>
-        <path id="lc-neuron-l" d="M30,60 Q20,45 15,35 M30,60 Q18,60 10,65 M30,60 Q22,72 18,82" fill="none" stroke="#FF8A00" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="120" stroke-dashoffset="120"/>
-        <path id="lc-neuron-r" d="M90,60 Q100,45 105,35 M90,60 Q102,60 110,65 M90,60 Q98,72 102,82" fill="none" stroke="#3AA0FF" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="120" stroke-dashoffset="120"/>
-        <circle id="lc-node-l" cx="30" cy="60" r="4" fill="#FF8A00" opacity="0"/>
-        <circle id="lc-node-r" cx="90" cy="60" r="4" fill="#3AA0FF" opacity="0"/>
-        <circle id="lc-spark" cx="60" cy="60" r="8" fill="#F2B33D" opacity="0" filter="url(#glow)"/>
-        <defs>
-          <filter id="glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        </defs>
-      </svg>
+  <div class="stage" id="stage">
+    <div class="logoWrap">
+      <div class="logoImg" id="logoImg"></div>
     </div>
-    <div id="loader-text">
-      <div id="loader-urja"><span>U</span><span>R</span><span>J</span><span>A</span></div>
-      <div id="loader-year">2K26</div>
-      <div id="loader-tag">SYNAPSE — THE PULSE WITHIN</div>
+    <div class="ringGlow" id="ringGlow"></div>
+    <div class="core" id="core"></div>
+    <div class="particles" id="particles"></div>
+    <div class="flash" id="flash"></div>
+
+    <div class="progress-wrap">
+      <div class="progress-label" id="progressLabel">Igniting the spark</div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     </div>
-    <div id="loader-bar-wrap"><div id="loader-bar"></div></div>
   </div>
 </div>
 
@@ -47,6 +38,34 @@
 
 <!-- TOUCH TRAIL CANVAS -->
 <canvas id="trail-canvas" aria-hidden="true"></canvas>
+
+<!-- GLOBAL HEADER -->
+<!-- GLOBAL HEADER -->
+<header id="global-header" style="position: fixed; top: 0; left: 0; right: 0; height: 65px; display: flex; align-items: center; padding: 0 20px; background: rgba(5,5,8,0.9); border-bottom: 1px solid rgba(58,160,255,0.3); z-index: 99999; backdrop-filter: blur(15px);">
+  <div style="display: flex; align-items: center; cursor: pointer; flex-grow: 1;" onclick="window.URJA.switchTab('home')">
+    <div class="gh-logo" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; margin-right: 12px; border: 1px solid var(--blue-l);">
+      <img src="./LOGO.jpeg" alt="Logo" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none';">
+    </div>
+    <div class="gh-name" style="font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 700; color: #3AA0FF; letter-spacing: 1px;">URJA <span style="color: #3AA0FF;">2K26</span></div>
+  </div>
+  
+  <div class="gh-menu-btn" onclick="document.getElementById('gh-menu').style.display = document.getElementById('gh-menu').style.display === 'flex' ? 'none' : 'flex'" style="cursor: pointer; color: #3AA0FF; padding: 10px; z-index: 100000;">
+    <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+  </div>
+</header>
+
+<div id="gh-menu" style="display: none; position: fixed; top: 75px; right: 20px; width: 180px; background: rgba(5,5,8,0.95); backdrop-filter: blur(15px); border: 1px solid rgba(242,179,61,0.3); border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); z-index: 99998; padding: 10px 0; flex-direction: column; align-items: stretch;">
+  <button class="gh-menu-link" onclick="window.URJA.switchTab('home'); this.parentElement.style.display='none'">HOME</button>
+  <button class="gh-menu-link" onclick="window.URJA.switchTab('events'); this.parentElement.style.display='none'">EVENTS</button>
+  <button class="gh-menu-link" onclick="window.URJA.switchTab('schedule'); this.parentElement.style.display='none'">SCHEDULE</button>
+  <button class="gh-menu-link" onclick="window.URJA.switchTab('gallery'); this.parentElement.style.display='none'">GALLERY</button>
+  <button class="gh-menu-link" onclick="window.URJA.switchTab('teams'); this.parentElement.style.display='none'">TEAMS</button>
+  <button class="gh-menu-link" onclick="window.URJA.switchTab('sponsors'); this.parentElement.style.display='none'">SPONSORS</button>
+</div>
+
+
+
+
 
 <!-- BOTTOM DOCK NAV -->
 <nav id="dock" aria-label="Main navigation">
@@ -94,33 +113,57 @@
   <div id="lb-caption"></div>
 </div>
 
+<!-- TAB LOADER -->
+<div id="tab-loader" aria-hidden="true">
+  <div class="tl-content">
+    <div class="routing-text">TRANSMITTING PULSE</div>
+    <svg class="pulse-svg" viewBox="0 0 400 60" preserveAspectRatio="none">
+      <path d="M 0 30 L 150 30 L 165 10 L 180 50 L 200 15 L 215 45 L 230 30 L 400 30" fill="none" stroke="rgba(255,138,0,0.15)" stroke-width="2" />
+      <path class="pulse-path" d="M 0 30 L 150 30 L 165 10 L 180 50 L 200 15 L 215 45 L 230 30 L 400 30" fill="none" stroke="#FFC94A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    <div id="tl-text">LOADING</div>
+  </div>
+</div>
+
 <main id="main">
 
 <!-- ==================== TAB: HOME ==================== -->
 <div class="tab-panel" id="tab-home">
-  <section class="hero-section">
+  <section class="hero-section" id="hero-section">
+    <canvas id="eeg-canvas"></canvas>
+    
+    <svg class="hero-circuit left" viewBox="0 0 100 200" preserveAspectRatio="none">
+      <path d="M0,50 L30,50 L40,60 L40,90 L60,110 L60,130" fill="none" stroke="currentColor" stroke-width="0.5"/>
+      <circle cx="60" cy="130" r="1.5" fill="currentColor"/>
+      <path d="M0,120 L20,120 L30,130 L30,160 L50,180" fill="none" stroke="currentColor" stroke-width="0.5"/>
+      <circle cx="50" cy="180" r="1.5" fill="currentColor"/>
+    </svg>
+    <svg class="hero-circuit right" viewBox="0 0 100 200" preserveAspectRatio="none">
+      <path d="M100,70 L70,70 L60,80 L60,110 L40,130 L40,150" fill="none" stroke="currentColor" stroke-width="0.5"/>
+      <circle cx="40" cy="150" r="1.5" fill="currentColor"/>
+      <path d="M100,140 L80,140 L70,150 L70,180 L50,200" fill="none" stroke="currentColor" stroke-width="0.5"/>
+      <circle cx="50" cy="200" r="1.5" fill="currentColor"/>
+    </svg>
+
     <div class="hero-inner">
       <p class="hero-kicker" data-reveal>Department of Electrical Engineering</p>
       <h1 class="hero-title" data-reveal>
         <span class="ht-urja">URJA</span>
-        <span class="ht-year">2K26</span>
+        <span class="ht-year" style="color: var(--blue-l);">2K26</span>
       </h1>
-      <p class="hero-theme" data-reveal>SYNAPSE — THE PULSE WITHIN</p>
       <p class="hero-tagline" data-reveal>One Spark, Endless Connections</p>
+      <p class="hero-date-venue" data-reveal>September 18-19, 2026 &bull; SCET</p>
+      
       <div class="hero-btns" data-reveal>
-        <button class="btn-primary" onclick="window.URJA.switchTab('events')">EXPLORE EVENTS &rarr;</button>
-        <button class="btn-ghost" onclick="window.URJA.switchTab('schedule')">VIEW SCHEDULE</button>
+        <button class="btn-primary btn-ripple" id="hero-cta-btn" onclick="window.URJA.switchTab('events')">EXPLORE EVENTS &rarr;</button>
+        <button class="btn-ghost trace-btn" onclick="window.URJA.switchTab('schedule')">
+          <span>VIEW SCHEDULE</span>
+          <svg class="btn-trace" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <rect x="0" y="0" width="100%" height="100%" fill="none" vector-effect="non-scaling-stroke"></rect>
+          </svg>
+        </button>
       </div>
 
-      <div class="hero-stats" data-reveal>
-        <div class="stat"><span class="stat-num" data-count="2">0</span><span class="stat-lbl">DAYS</span></div>
-        <div class="stat-sep"></div>
-        <div class="stat"><span class="stat-num" data-count="15">0</span><span class="stat-lbl">EVENTS</span></div>
-        <div class="stat-sep"></div>
-        <div class="stat"><span class="stat-num" data-count="500">0</span><span class="stat-lbl">PARTICIPANTS</span></div>
-      </div>
-
-      <!-- Countdown -->
       <div class="countdown-wrap" data-reveal>
         <div class="cd-label">TIME UNTIL SIGNAL FIRES</div>
         <div class="cd-units">
@@ -132,53 +175,60 @@
           <span class="cd-colon">:</span>
           <div class="cd-unit"><span id="cd-secs" class="cd-num">--</span><span class="cd-sub">SEC</span></div>
         </div>
-        <!-- Synapse bulb SVG -->
-        <svg class="synapse-bulb" viewBox="0 0 60 90" fill="none" aria-hidden="true">
+        
+        <svg class="synapse-bulb" viewBox="0 0 100 130" fill="none" aria-hidden="true">
           <defs>
             <linearGradient id="bg-fill" x1="0" y1="1" x2="0" y2="0">
               <stop offset="0%" stop-color="#FF8A00"/>
               <stop offset="100%" stop-color="#FFC94A"/>
             </linearGradient>
             <clipPath id="bulb-cp">
-              <path d="M30,5 Q52,5 52,27 Q52,42 42,52 L42,65 Q42,70 30,70 Q18,70 18,65 L18,52 Q8,42 8,27 Q8,5 30,5Z"/>
+              <path d="M50,25 Q72,25 72,47 Q72,62 62,72 L62,85 Q62,90 50,90 Q38,90 38,85 L38,72 Q28,62 28,47 Q28,25 50,25Z"/>
             </clipPath>
           </defs>
-          <path d="M30,5 Q52,5 52,27 Q52,42 42,52 L42,65 Q42,70 30,70 Q18,70 18,65 L18,52 Q8,42 8,27 Q8,5 30,5Z" stroke="#F2B33D" stroke-width="1.5"/>
-          <rect id="bulb-fill" x="8" y="5" width="44" height="65" fill="url(#bg-fill)" clip-path="url(#bulb-cp)" transform="translate(0,65) scale(1,0)"/>
-          <path d="M22,65 L38,65" stroke="#F2B33D" stroke-width="2" stroke-linecap="round"/>
-          <path d="M24,70 L36,70" stroke="#F2B33D" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M28,75 L32,75" stroke="#F2B33D" stroke-width="1" stroke-linecap="round"/>
-          <line x1="30" y1="0" x2="30" y2="-4" stroke="#F2B33D" stroke-width="1.5"/>
-          <line x1="56" y1="16" x2="60" y2="12" stroke="#F2B33D" stroke-width="1.5"/>
-          <line x1="4" y1="16" x2="0" y2="12" stroke="#F2B33D" stroke-width="1.5"/>
+          <circle id="bulb-ring" cx="50" cy="50" r="45" stroke="#3AA0FF" stroke-width="1" stroke-dasharray="283" stroke-dashoffset="283" opacity="0.3"/>
+          <circle id="bulb-ring-active" cx="50" cy="50" r="45" stroke="#3AA0FF" stroke-width="2" stroke-dasharray="283" stroke-dashoffset="283" style="transition: stroke-dashoffset 1s ease-out;" />
+          
+          <path d="M50,25 Q72,25 72,47 Q72,62 62,72 L62,85 Q62,90 50,90 Q38,90 38,85 L38,72 Q28,62 28,47 Q28,25 50,25Z" stroke="#3AA0FF" stroke-width="1.5" />
+          <rect id="bulb-fill" x="28" y="25" width="44" height="65" fill="url(#bg-fill)" clip-path="url(#bulb-cp)" transform="translate(0,65) scale(1,0)" style="transition: transform 1s ease-out; transform-origin: center bottom;" />
+          
+          <path d="M42,85 L58,85" stroke="#3AA0FF" stroke-width="2" stroke-linecap="round"/>
+          <path d="M44,90 L56,90" stroke="#3AA0FF" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M48,95 L52,95" stroke="#3AA0FF" stroke-width="1" stroke-linecap="round"/>
+          
+          <line x1="50" y1="20" x2="50" y2="16" stroke="#3AA0FF" stroke-width="1.5"/>
+          <line x1="76" y1="36" x2="80" y2="32" stroke="#3AA0FF" stroke-width="1.5"/>
+          <line x1="24" y1="36" x2="20" y2="32" stroke="#3AA0FF" stroke-width="1.5"/>
         </svg>
+      </div>
+
+      
+      <div class="hero-schedule-img" data-reveal onclick="window.URJA.switchTab('schedule')">
+        <div class="hsi-label">VIEW MASTER SCHEDULE</div>
+        <img src="./URJA TIME TABLE.jpg" alt="Event Schedule" class="hsi-image" onerror="this.src='https://placehold.co/600x320/1a1a1f/F2B33D?text=Master+Schedule'">
+      </div>
+
+      <div class="hero-sponsors" data-reveal>
+        <div class="hs-powered">
+          <span>POWERED BY</span>
+          <img src="./powered by.jpeg" class="hs-logo" alt="Powered By">
+        </div>
+        <div class="hs-sep"></div>
+        <div class="hs-co">
+          <span>CO-POWERED BY</span>
+          <img src="./copowered by.jpeg" class="hs-logo" alt="Co-Powered By">
+        </div>
+      </div>
+
+      <div class="scroll-indicator" data-reveal>
+        <div class="si-line"><div class="si-dot"></div></div>
+        <div class="si-text">SIGNAL CONTINUES</div>
       </div>
     </div>
   </section>
 
   <!-- Footer inside home tab -->
-  <footer id="footer">
-    <div class="footer-pulse" aria-hidden="true">
-      <svg width="100%" height="30" viewBox="0 0 800 30" preserveAspectRatio="none">
-        <path d="M0,15 Q100,15 140,15 L170,3 L185,27 L200,10 L215,22 L230,15 Q350,15 400,15 Q500,15 530,15 L570,3 L585,27 L600,10 L615,22 L630,15 Q750,15 800,15" fill="none" stroke="#F2B33D" stroke-width="1" stroke-dasharray="1600" stroke-dashoffset="1600">
-          <animate attributeName="stroke-dashoffset" from="1600" to="-1600" dur="6s" repeatCount="indefinite"/>
-        </path>
-      </svg>
-    </div>
-    <div class="footer-inner">
-      <div class="footer-brand">URJA <span>2K26</span></div>
-      <p class="footer-sub">Synapse — The Pulse Within</p>
-      <a href="https://www.instagram.com/urja2k26" target="_blank" rel="noopener" class="footer-ig" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        @urja2k26
-      </a>
-      <div class="footer-cols">
-        <div><strong>HEAD OF DEPARTMENT</strong><br>Prof. Hitesh K. Mehta<br>Dept. of Electrical Engineering</div>
-        <div><strong>FACULTY COORDINATORS</strong><br>Prof. Sandhya Rathore<br>Prof. Aditi Hajari<br>Prof. Nilesh Shah<br>Prof. Bhavin Ornawala</div>
-      </div>
-      <p class="footer-copy">&copy; 2026 URJA — All Rights Reserved &nbsp;|&nbsp; Made by Bhavya Tharakan</p>
-    </div>
-  </footer>
+  
 </div>
 
 <!-- ==================== TAB: EVENTS ==================== -->
@@ -186,80 +236,130 @@
   <section class="page-section">
     <div class="page-header" data-reveal>
       <div class="page-label">SIGNAL ROUTED</div>
-      <h2 class="page-title">THE CONNECTIONS</h2>
+      <h2 class="page-title">EVENTS</h2>
     </div>
 
-    <div class="hemi-switch" role="group" data-reveal>
-      <button class="hemi-btn active" data-filter="all">ALL</button>
-      <button class="hemi-btn" data-filter="technical">TECHNICAL</button>
-      <button class="hemi-btn" data-filter="non-technical">NON-TECH</button>
-    </div>
+          <div class="event-scroll-progress" id="event-scroll-progress" data-reveal>SIGNAL ROUTING: 0/0</div>
 
-    <div class="events-grid" id="events-grid">
-
-      <div class="ecard technical" data-cat="technical" data-name="Circuit-X" data-fee="50" data-team="2 Members" data-desc="Design and simulate a circuit under time pressure. Test your engineering skills against the clock in this electrifying challenge." data-coord="Prof. Ramesh Kumar | +91 98765 43210" data-poster="https://picsum.photos/seed/circuitx/400/600">
-        <div class="ecard-glow"></div>
-        <div class="ecard-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+      <div class="brain-filter-wrap" data-reveal>
+        <svg class="brain-filter" viewBox="0 0 100 100" id="brain-filter">
+          <!-- Left Hemisphere: Non-Tech (Amber) -->
+          <path class="hemi left-hemi" data-filter="non-technical" d="M 50 10 C 20 10, 10 30, 15 60 C 20 80, 40 90, 48 90 L 48 10 Z" />
+          <!-- Right Hemisphere: Tech (Blue) -->
+          <path class="hemi right-hemi" data-filter="technical" d="M 50 10 C 80 10, 90 30, 85 60 C 80 80, 60 90, 52 90 L 52 10 Z" />
+          <!-- Central Synapse -->
+          <line x1="50" y1="15" x2="50" y2="85" class="brain-spine" />
+        </svg>
+        <div class="brain-labels">
+          <span class="bl-left">NON-TECH</span>
+          <span class="bl-center active">ALL EVENTS</span>
+          <span class="bl-right">TECHNICAL</span>
         </div>
-        <h3 class="ecard-name">Circuit-X</h3>
-        <p class="ecard-desc">Design and simulate a circuit under time pressure.</p>
+      </div>
+
+          <div class="events-container">
+        <svg id="live-circuit-bg" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <!-- PCB traces will be dynamically generated or static -->
+          <path d="M 10 0 L 10 20 L 30 40 L 30 100" class="circuit-trace" />
+          <path d="M 90 0 L 90 30 L 70 50 L 70 100" class="circuit-trace" />
+          <path d="M 50 0 L 50 100" class="circuit-trace" />
+          <circle cx="10" cy="20" r="1" class="circuit-node" />
+          <circle cx="30" cy="40" r="1" class="circuit-node" />
+          <circle cx="90" cy="30" r="1" class="circuit-node" />
+          <circle cx="70" cy="50" r="1" class="circuit-node" />
+        </svg>
+        <svg id="pcb-lines-svg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+        <div class="events-grid" id="events-grid">
+
+      <div data-reveal class="ecard technical" data-cat="technical" data-name="Aavishkar" data-fee="FREE" data-team="Team" data-desc="A project/model exhibition where participants present working, non-working, or simulation-based electrical/technical projects to a jury." data-coord="Alok Das | +91 78599 67939, Jahan | +91 88663 90372" data-link="https://docs.google.com/forms/d/e/1FAIpQLSdyrLT_nRaVsdDl50ek6l_CH_y90Qv2eJFW_4ZUQANLxsZ7ew/viewform?usp=header" data-poster="./FLYERS/aavishkar.jpeg">
+        <div class="ecard-glow"></div><div class="ecard-borders"><span class="border-top"></span><span class="border-right"></span><span class="border-bottom"></span><span class="border-left"></span></div>
+        <div class="ecard-icon" style="overflow: hidden; padding: 2px;"><img src="./logos/AAVISHKAR.jpeg" alt="Aavishkar Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+          <h3 class="ecard-name">Aavishkar</h3>
+        <p class="ecard-desc">Present working, non-working, or simulation-based electrical/technical projects to a jury.</p>
         <div class="ecard-meta">
-          <span class="badge paid">&thinsp;&#8377;50&thinsp;</span>
+          <span class="badge free">FREE</span>
+          <span class="badge neutral">Team</span>
+        </div>
+        <button class="ecard-btn">VIEW &rarr;</button>
+      </div>
+
+      <div data-reveal class="ecard non-technical" data-cat="non-technical" data-name="F1 Arena" data-fee="20" data-team="Solo" data-desc="A multi-stage competition with qualification rounds, semifinals, and finals, selecting the top three participants." data-coord="Shivam Vaishnav | +91 63541 25421, Daksh Patel | +91 70460 30116" data-link="https://docs.google.com/forms/d/e/1FAIpQLSdH1PlqwfOlLGocKuy1_FiSFCOH1m4XHs5qaSq1yhSlwqScwQ/viewform?usp=header" data-poster="./FLYERS/f1.jpeg">
+        <div class="ecard-glow"></div><div class="ecard-borders"><span class="border-top"></span><span class="border-right"></span><span class="border-bottom"></span><span class="border-left"></span></div>
+        <div class="ecard-icon" style="overflow: hidden; padding: 2px;"><img src="./logos/F1.jpeg" alt="F1 Arena Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+          <h3 class="ecard-name">F1 Arena</h3>
+        <p class="ecard-desc">Qualification rounds, semifinals, and finals — top three participants make the cut.</p>
+        <div class="ecard-meta">
+          <span class="badge paid">&thinsp;&#8377;20&thinsp;</span>
+          <span class="badge neutral">Solo</span>
+        </div>
+        <button class="ecard-btn">VIEW &rarr;</button>
+      </div>
+
+      <div data-reveal class="ecard technical" data-cat="technical" data-name="SYNC: The Tech Relay" data-fee="FREE" data-team="2 Members" data-desc="A two-player tech relay where participants observe and recreate pixel and circuit challenges, crack codes, and work together to complete the challenge." data-coord="Yashasvi Agrawal | +91 89055 66798, Vishwa Patel | +91 97251 07445, Bhavya T. | +91 88490 65660" data-link="https://docs.google.com/forms/d/e/1FAIpQLSco4-HRVbacaYN7kEW6U3u957rsfuaok4EFqpwNB2ho9u1T1A/viewform?usp=header" data-poster="./FLYERS/sync.jpeg">
+        <div class="ecard-glow"></div><div class="ecard-borders"><span class="border-top"></span><span class="border-right"></span><span class="border-bottom"></span><span class="border-left"></span></div>
+        <div class="ecard-icon" style="overflow: hidden; padding: 2px;"><img src="./logos/SYNC THE TECH RELAY.jpeg" alt="SYNC: The Tech Relay Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+          <h3 class="ecard-name">SYNC: The Tech Relay</h3>
+        <p class="ecard-desc">A two-player tech relay — observe, recreate pixel/circuit challenges, and crack codes together.</p>
+        <div class="ecard-meta">
+          <span class="badge free">FREE</span>
           <span class="badge neutral">2 Members</span>
         </div>
         <button class="ecard-btn">VIEW &rarr;</button>
       </div>
 
-      <div class="ecard technical" data-cat="technical" data-name="Code Spark" data-fee="100" data-team="3 Members" data-desc="Competitive programming challenge. Solve algorithmic problems under timed conditions with your team." data-coord="Prof. Anita Sharma | +91 98765 43211" data-poster="https://picsum.photos/seed/codespark/400/600">
-        <div class="ecard-glow"></div>
-        <div class="ecard-icon">
-          <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        </div>
-        <h3 class="ecard-name">Code Spark</h3>
-        <p class="ecard-desc">Competitive programming challenge for engineering minds.</p>
+      <div data-reveal class="ecard non-technical" data-cat="non-technical" data-name="Power Up" data-fee="20" data-team="Solo" data-desc="A fitness challenge where participants combine push-ups, squats, and crunches to reach exactly 100 points without repeating an exercise." data-coord="Yug | +91 98799 28249, Sarvagna | +91 99784 59144" data-link="https://docs.google.com/forms/d/e/1FAIpQLSfR0R-ZI8K7YjEtc1X6l4iuotVHINu51VOVtaQPwM5LQV3ubw/viewform?usp=header" data-poster="./FLYERS/power up.jpeg">
+        <div class="ecard-glow"></div><div class="ecard-borders"><span class="border-top"></span><span class="border-right"></span><span class="border-bottom"></span><span class="border-left"></span></div>
+        <div class="ecard-icon" style="overflow: hidden; padding: 2px;"><img src="./logos/POWER UP.jpeg" alt="Power Up Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+          <h3 class="ecard-name">Power Up</h3>
+        <p class="ecard-desc">Combine push-ups, squats &amp; crunches to hit exactly 100 points without repeating an exercise.</p>
         <div class="ecard-meta">
-          <span class="badge paid">&thinsp;&#8377;100&thinsp;</span>
-          <span class="badge neutral">3 Members</span>
+          <span class="badge paid">&thinsp;&#8377;20&thinsp;</span>
+          <span class="badge neutral">Solo</span>
         </div>
         <button class="ecard-btn">VIEW &rarr;</button>
       </div>
 
-      <div class="ecard technical" data-cat="technical" data-name="Robo Rally" data-fee="150" data-team="4 Members" data-desc="Build and race a line-following robot. Engineer, assemble, and compete on the arena track for glory." data-coord="Dr. Vijay Menon | +91 98765 43212" data-poster="https://picsum.photos/seed/roborally/400/600">
-        <div class="ecard-glow"></div>
-        <div class="ecard-icon">
-          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
-        </div>
-        <h3 class="ecard-name">Robo Rally</h3>
-        <p class="ecard-desc">Build and race a line-following robot on the arena.</p>
+      <div data-reveal class="ecard technical" data-cat="technical" data-name="Abhivyakti" data-fee="FREE" data-team="Solo" data-desc="A two-round speaking and debate competition with technical topics in the grand finale, evaluated on technical knowledge, communication, body language, and presence of mind." data-coord="Kanhai Trivedi | +91 88668 64773" data-link="https://docs.google.com/forms/d/e/1FAIpQLSd6uk0ZvjVbTIZyV2LNKTqff7Fo4wohxMI4ylOd5A90zUkcxg/viewform?usp=header" data-poster="./FLYERS/abhivyakti.jpeg">
+        <div class="ecard-glow"></div><div class="ecard-borders"><span class="border-top"></span><span class="border-right"></span><span class="border-bottom"></span><span class="border-left"></span></div>
+        <div class="ecard-icon" style="overflow: hidden; padding: 2px;"><img src="./logos/ABHIVYAKTI.jpeg" alt="Abhivyakti Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+          <h3 class="ecard-name">Abhivyakti</h3>
+        <p class="ecard-desc">A two-round speaking &amp; debate competition, with technical topics in the grand finale.</p>
         <div class="ecard-meta">
-          <span class="badge paid">&thinsp;&#8377;150&thinsp;</span>
-          <span class="badge neutral">4 Members</span>
+          <span class="badge free">FREE</span>
+          <span class="badge neutral">Solo</span>
         </div>
         <button class="ecard-btn">VIEW &rarr;</button>
       </div>
 
-      <div class="ecard technical" data-cat="technical" data-name="Tech Quiz" data-fee="50" data-team="2 Members" data-desc="Rapid-fire electrical engineering knowledge quiz. Test circuits, signals, and systems under pressure." data-coord="Prof. Lakshmi Iyer | +91 98765 43213" data-poster="https://picsum.photos/seed/techquiz/400/600">
-        <div class="ecard-glow"></div>
-        <div class="ecard-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <div data-reveal class="ecard non-technical" data-cat="non-technical" data-name="Human Ludo" data-fee="15" data-team="Solo" data-desc="An interactive human-sized Ludo game where participants compete using movement and strategy." data-coord="Mihir Parekh | +91 87350 70973, Ayush Gandhi | +91 81601 31847" data-link="https://docs.google.com/forms/d/e/1FAIpQLSdNXTZuwD91g4npmEBPXxMZJzARBNMpbUCrIyhis04UbgG2yg/viewform?usp=header" data-poster="./FLYERS/human ludo.jpeg">
+        <div class="ecard-glow"></div><div class="ecard-borders"><span class="border-top"></span><span class="border-right"></span><span class="border-bottom"></span><span class="border-left"></span></div>
+        <div class="ecard-icon" style="overflow: hidden; padding: 2px;"><img src="./logos/HUMAN LUDO.jpeg" alt="Human Ludo Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+          <h3 class="ecard-name">Human Ludo</h3>
+        <p class="ecard-desc">A human-sized Ludo board — compete using movement and strategy.</p>
+        <div class="ecard-meta">
+          <span class="badge paid">&thinsp;&#8377;15&thinsp;</span>
+          <span class="badge neutral">Solo</span>
         </div>
-        <h3 class="ecard-name">Tech Quiz</h3>
-        <p class="ecard-desc">Rapid-fire EE knowledge challenge.</p>
+        <button class="ecard-btn">VIEW &rarr;</button>
+      </div>
+
+      <div data-reveal class="ecard technical" data-cat="technical" data-name="Game of Drones" data-fee="50" data-team="Solo" data-desc="A two-round drone challenge where participants clear obstacles and pilot an RC drone through a customized challenge maze." data-coord="Vansh Patel | +91 70167 04216, Jiya Patel | +91 96014 04051" data-link="https://docs.google.com/forms/d/e/1FAIpQLScONCjPecdpNdqckJPorrZW4JAbQO0O81DmZpjjauOmuVCBDw/viewform?usp=header" data-poster="./FLYERS/god.jpeg">
+        <div class="ecard-glow"></div><div class="ecard-borders"><span class="border-top"></span><span class="border-right"></span><span class="border-bottom"></span><span class="border-left"></span></div>
+        <div class="ecard-icon" style="overflow: hidden; padding: 2px;"><img src="./logos/GAME OF DRONE.jpeg" alt="Game of Drones Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+          <h3 class="ecard-name">Game of Drones</h3>
+        <p class="ecard-desc">Pilot an RC drone through a customized obstacle maze across two rounds.</p>
         <div class="ecard-meta">
           <span class="badge paid">&thinsp;&#8377;50&thinsp;</span>
-          <span class="badge neutral">2 Members</span>
+          <span class="badge neutral">Solo</span>
         </div>
         <button class="ecard-btn">VIEW &rarr;</button>
       </div>
 
-      <div class="ecard technical" data-cat="technical" data-name="Paper Presentation" data-fee="FREE" data-team="Solo" data-desc="Present a research paper on emerging electrical engineering topics to industry experts and faculty." data-coord="Dr. Priya Nair | +91 98765 43214" data-poster="https://picsum.photos/seed/paperpres/400/600">
-        <div class="ecard-glow"></div>
-        <div class="ecard-icon">
-          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        </div>
-        <h3 class="ecard-name">Paper Presentation</h3>
-        <p class="ecard-desc">Present research on emerging EE topics.</p>
+      <div data-reveal class="ecard non-technical" data-cat="non-technical" data-name="Quiz Whiz Blitz" data-fee="FREE" data-team="Solo" data-desc="A solo quiz with two rounds testing participants on technical and engineering-based questions, with selection based on accuracy, score, and completion time." data-coord="Yash Jinwala | +91 94997 74999, Kalyan Kapadia | +91 90330 95534" data-link="https://docs.google.com/forms/d/e/1FAIpQLSfXLvTh3wvg4isxYTgPjTMKAKHeG2Us5oQn5csoFwZqdh0Fog/viewform?usp=header" data-poster="./FLYERS/qwb.jpeg">
+        <div class="ecard-glow"></div><div class="ecard-borders"><span class="border-top"></span><span class="border-right"></span><span class="border-bottom"></span><span class="border-left"></span></div>
+        <div class="ecard-icon" style="overflow: hidden; padding: 2px;"><img src="./logos/QUIZ WHIZ BLITZ.jpeg" alt="Quiz Whiz Blitz Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+          <h3 class="ecard-name">Quiz Whiz Blitz</h3>
+        <p class="ecard-desc">Two rounds of technical &amp; engineering questions — accuracy, score, and speed decide the winner.</p>
         <div class="ecard-meta">
           <span class="badge free">FREE</span>
           <span class="badge neutral">Solo</span>
@@ -267,209 +367,623 @@
         <button class="ecard-btn">VIEW &rarr;</button>
       </div>
 
-      <div class="ecard non-technical" data-cat="non-technical" data-name="Spark Talk" data-fee="FREE" data-team="Solo" data-desc="Impromptu speaking on a given topic. Think fast, speak smart, and ignite the audience with your words." data-coord="Arun Prakash | +91 98765 43215" data-poster="https://picsum.photos/seed/sparktalk/400/600">
-        <div class="ecard-glow"></div>
-        <div class="ecard-icon">
-          <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        </div>
-        <h3 class="ecard-name">Spark Talk</h3>
-        <p class="ecard-desc">Impromptu speaking — think fast, spark minds.</p>
+      <div data-reveal class="ecard technical" data-cat="technical" data-name="Escape the Unknown" data-fee="20" data-team="Team" data-desc="A three-round challenge featuring Guess the Song, Laser Maze, and Buzz Wire, combining recognition, teamwork, and precision." data-coord="Durva Patel | +91 90990 75533, Prisha Gandhi | +91 94083 34563" data-link="https://docs.google.com/forms/d/e/1FAIpQLSfwRt19Jqcm1FI-hdG3Kbpo9ZMtDZld7waWoa02CYqt6fKAMw/viewform?usp=header" data-poster="./FLYERS/etu.jpeg">
+        <div class="ecard-glow"></div><div class="ecard-borders"><span class="border-top"></span><span class="border-right"></span><span class="border-bottom"></span><span class="border-left"></span></div>
+        <div class="ecard-icon" style="overflow: hidden; padding: 2px;"><img src="./logos/ESCAPE THE UNKNOWN.jpeg" alt="Escape the Unknown Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+          <h3 class="ecard-name">Escape the Unknown</h3>
+        <p class="ecard-desc">Three rounds — Guess the Song, Laser Maze, and Buzz Wire — testing teamwork and precision.</p>
         <div class="ecard-meta">
-          <span class="badge free">FREE</span>
-          <span class="badge neutral">Solo</span>
+          <span class="badge paid">&thinsp;&#8377;20&thinsp;</span>
+          <span class="badge neutral">Team</span>
         </div>
         <button class="ecard-btn">VIEW &rarr;</button>
       </div>
 
-      <div class="ecard non-technical" data-cat="non-technical" data-name="Cultural Night" data-fee="FREE" data-team="Solo" data-desc="Performances of music, dance, and drama. Celebrate art and creativity under the stars at URJA." data-coord="Meera Krishnan | +91 98765 43216" data-poster="https://picsum.photos/seed/cultural/400/600">
-        <div class="ecard-glow"></div>
-        <div class="ecard-icon">
-          <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-        </div>
-        <h3 class="ecard-name">Cultural Night</h3>
-        <p class="ecard-desc">Music, dance &amp; drama under the stars.</p>
+      <div data-reveal class="ecard technical" data-cat="technical" data-name="Clash of Minds" data-fee="15" data-team="2-4 Members" data-desc="A team-based challenge featuring Blind Identification and Guess the Picture rounds, with 2–4 participants per team." data-coord="Jay | +91 63567 99369, Ridham | +91 79906 03325" data-link="https://docs.google.com/forms/d/e/1FAIpQLScnldZT1fzHm-ef6FkzmEf8XP-Ze6K1ixZTuHR5WGFqHXTqJQ/viewform?usp=header" data-poster="./FLYERS/com.jpeg">
+        <div class="ecard-glow"></div><div class="ecard-borders"><span class="border-top"></span><span class="border-right"></span><span class="border-bottom"></span><span class="border-left"></span></div>
+        <div class="ecard-icon" style="overflow: hidden; padding: 2px;"><img src="./logos/CLASH OF MINDS.png" alt="Clash of Minds Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+          <h3 class="ecard-name">Clash of Minds</h3>
+        <p class="ecard-desc">Blind Identification and Guess the Picture rounds — teams of 2–4 go head to head.</p>
         <div class="ecard-meta">
-          <span class="badge free">FREE</span>
-          <span class="badge neutral">Solo</span>
+          <span class="badge paid">&thinsp;&#8377;15&thinsp;</span>
+          <span class="badge neutral">2-4 Members</span>
         </div>
         <button class="ecard-btn">VIEW &rarr;</button>
       </div>
 
-      <div class="ecard non-technical" data-cat="non-technical" data-name="Treasure Hunt" data-fee="80" data-team="3 Members" data-desc="Solve cryptic clues scattered across campus and race to find the final treasure before other teams." data-coord="Kiran Bose | +91 98765 43217" data-poster="https://picsum.photos/seed/treasure/400/600">
-        <div class="ecard-glow"></div>
-        <div class="ecard-icon">
-          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </div>
-        <h3 class="ecard-name">Treasure Hunt</h3>
-        <p class="ecard-desc">Solve cryptic clues across campus.</p>
-        <div class="ecard-meta">
-          <span class="badge paid">&thinsp;&#8377;80&thinsp;</span>
-          <span class="badge neutral">3 Members</span>
-        </div>
-        <button class="ecard-btn">VIEW &rarr;</button>
-      </div>
-
-      <div class="ecard non-technical" data-cat="non-technical" data-name="Photography" data-fee="30" data-team="Solo" data-desc="Capture the fest theme on camera. Submit your best shot of Synapse: The Pulse Within in action." data-coord="Deepa Rao | +91 98765 43218" data-poster="https://picsum.photos/seed/photography/400/600">
-        <div class="ecard-glow"></div>
-        <div class="ecard-icon">
-          <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        </div>
-        <h3 class="ecard-name">Photography</h3>
-        <p class="ecard-desc">Capture the fest theme through your lens.</p>
+      <div data-reveal class="ecard non-technical" data-cat="non-technical" data-name="Robo-Soccer" data-fee="30" data-team="Team" data-desc="A robotic football competition consisting of selection, qualifier, and final rounds where teams compete to score goals." data-coord="Yash Hingu | +91 94297 35928, Vivek Parmar | +91 78744 32985, Kavya Khandwala | +91 97270 39190" data-link="https://docs.google.com/forms/d/e/1FAIpQLSfVBHH6yiP-KMGOFhchO2reIjEpeIxgDHHazXmkuKEgqNy_Kg/viewform?usp=header" data-poster="./FLYERS/robosoccer.jpeg">
+        <div class="ecard-glow"></div><div class="ecard-borders"><span class="border-top"></span><span class="border-right"></span><span class="border-bottom"></span><span class="border-left"></span></div>
+        <div class="ecard-icon" style="overflow: hidden; padding: 2px;"><img src="./logos/ROBO SOCCER.jpeg" alt="Robo-Soccer Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+          <h3 class="ecard-name">Robo-Soccer</h3>
+        <p class="ecard-desc">Selection, qualifier and final rounds — teams battle with robots to score goals.</p>
         <div class="ecard-meta">
           <span class="badge paid">&thinsp;&#8377;30&thinsp;</span>
-          <span class="badge neutral">Solo</span>
+          <span class="badge neutral">Team</span>
         </div>
         <button class="ecard-btn">VIEW &rarr;</button>
       </div>
+      </div><!-- /events-grid -->
+  </section>
+</div>
 
-      <div class="ecard non-technical" data-cat="non-technical" data-name="Gaming Arena" data-fee="50" data-team="Solo" data-desc="Esports tournament — compete in mobile and PC games. Show your reflexes and strategic thinking." data-coord="Rahul Shetty | +91 98765 43219" data-poster="https://picsum.photos/seed/gaming/400/600">
-        <div class="ecard-glow"></div>
-        <div class="ecard-icon">
-          <svg viewBox="0 0 24 24"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/><rect x="2" y="6" width="20" height="12" rx="2"/></svg>
-        </div>
-        <h3 class="ecard-name">Gaming Arena</h3>
-        <p class="ecard-desc">Esports tournament — mobile &amp; PC games.</p>
-        <div class="ecard-meta">
-          <span class="badge paid">&thinsp;&#8377;50&thinsp;</span>
-          <span class="badge neutral">Solo</span>
-        </div>
-        <button class="ecard-btn">VIEW &rarr;</button>
+    <!-- ==================== TAB: SCHEDULE ==================== -->
+  <div class="tab-panel" id="tab-schedule" hidden>
+    <section class="page-section" id="schedule-section">
+      <div class="page-header" data-reveal>
+        <div class="page-label">SIGNAL SYNCHRONIZED</div>
+        <h2 class="page-title">SCHEDULE</h2>
       </div>
+  
+      <!-- Big Buttons (Day Switcher) -->
+      <div class="freq-dial-wrap" data-reveal>
+        <div class="brain-labels">
+          <span class="bl-left active" id="fd-btn-1">DAY 1</span>
+          <span class="bl-right" id="fd-btn-2">DAY 2</span>
+        </div>
+      </div>
+  
+      <!-- Tuning Frequencies (Filters) -->
+      <div class="tuner-wrap" data-reveal>
+        <button class="tuner-btn active" data-tf="all" aria-label="All Events">
+          <svg viewBox="0 0 24 24"><path d="M2 12 Q6 2 12 12 T22 12" class="wave-blue"/><path d="M2 12 Q6 22 12 12 T22 12" class="wave-amber"/></svg>
+          <span>ALL</span>
+        </button>
+        <button class="tuner-btn" data-tf="technical" aria-label="Technical">
+          <svg viewBox="0 0 24 24"><path d="M2 12 Q6 2 12 12 T22 12" class="wave-blue"/></svg>
+          <span>TECH</span>
+        </button>
+        <button class="tuner-btn" data-tf="non-technical" aria-label="Non-Technical">
+          <svg viewBox="0 0 24 24"><path d="M2 12 Q6 22 12 12 T22 12" class="wave-amber"/></svg>
+          <span>NON-TECH</span>
+        </button>
+        <button class="tuner-btn" data-tf="my-circuit" aria-label="My Circuit">
+          <svg viewBox="0 0 24 24" style="fill:var(--gold);stroke:none;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span>MY CIRCUIT</span>
+        </button>
+      </div>
+  
+      <div id="timeline-container">
+          <!-- DAY 1 TIMELINE -->
+          <div id="timeline-d1" class="timeline axon-track" >
+            <div class="axon-line"></div>
+            <div class="axon-glow-line" id="axon-glow-1"></div>
 
-    </div><!-- /events-grid -->
-  </section>
-</div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">09:00 AM</span><span class="end-t">09:30 AM</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card default" data-scat="default" data-id="ev-d1-1">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">TEA AND BREAKFAST</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [PSP LAB]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">09:30 AM</span><span class="end-t">10:30 AM</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card technical" data-scat="technical" data-id="ev-d1-2">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">ABHIVYAKTI</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-01]</div>
+                  </div>
+                </div>
+                <div class="tl-card technical" data-scat="technical" data-id="ev-d1-3">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">AAVISHKAR</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-02]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">10:00 AM</span><span class="end-t">ONWARDS</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card non-technical" data-scat="non-technical" data-id="ev-d1-4">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">POWER UP</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-03]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">10:30 AM</span><span class="end-t">12:00 PM</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card technical" data-scat="technical" data-id="ev-d1-5">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">CLASH OF MINDS (ROUND-1)</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-05]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">11:00 AM</span><span class="end-t">ONWARDS</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card non-technical" data-scat="non-technical" data-id="ev-d1-6">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">ESCAPE THE UNKNOWN</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-106]</div>
+                  </div>
+                </div>
+                <div class="tl-card technical" data-scat="technical" data-id="ev-d1-7">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">ROBO SOCCER (R-1)</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [FRONT OF ELECTRICAL DEPT]</div>
+                  </div>
+                </div>
+                <div class="tl-card non-technical" data-scat="non-technical" data-id="ev-d1-8">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">LAND OF LUDO</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-103]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">12:00 PM</span><span class="end-t">01:00 PM</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card non-technical" data-scat="non-technical" data-id="ev-d1-9">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">THE QUIZ WHITZ BLITZ (R-1)</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-01]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">12:00 PM</span><span class="end-t">ONWARDS</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card technical" data-scat="technical" data-id="ev-d1-10">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">GAME OF DRONES (R-1)</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [SCET DOME]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">01:00 PM</span><span class="end-t">01:30 PM</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card default" data-scat="default" data-id="ev-d1-11">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">LUNCH BREAK</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [CAMPUS]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">01:30 PM</span><span class="end-t">04:00 PM</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card technical" data-scat="technical" data-id="ev-d1-12">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">SYNC - THE TECHRELAY (R-1)</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-02]</div>
+                  </div>
+                </div>
+                <div class="tl-card technical" data-scat="technical" data-id="ev-d1-13">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">F1 ARENA (R-1)</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-01]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-<!-- ==================== TAB: SCHEDULE ==================== -->
-<div class="tab-panel" id="tab-schedule" hidden>
-  <section class="page-section">
-    <div class="page-header" data-reveal>
-      <div class="page-label">SIGNAL SYNCHRONIZED</div>
-      <h2 class="page-title">SIGNAL FLOW</h2>
+          <!-- DAY 2 TIMELINE -->
+          <div id="timeline-d2" class="timeline axon-track" hidden>
+            <div class="axon-line"></div>
+            <div class="axon-glow-line" id="axon-glow-2"></div>
+
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">09:00 AM</span><span class="end-t">09:30 AM</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card default" data-scat="default" data-id="ev-d2-1">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">TEA AND BREAKFAST</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [PSP LAB]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">09:30 AM</span><span class="end-t">10:30 AM</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card non-technical" data-scat="non-technical" data-id="ev-d2-2">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">THE QUIZ WHITZ BLITZ (ROUND-2)</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-01]</div>
+                  </div>
+                </div>
+                <div class="tl-card technical" data-scat="technical" data-id="ev-d2-3">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">SYNC - THE TECHRELAY (ROUND-2)</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-02]</div>
+                  </div>
+                </div>
+                <div class="tl-card technical" data-scat="technical" data-id="ev-d2-4">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">ROBO SOCCER (ROUND-2)</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [FRONT OF ELECTRICAL DEPT]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">10:00 AM</span><span class="end-t">ONWARDS</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card non-technical" data-scat="non-technical" data-id="ev-d2-5">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">POWER UP</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-03]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">10:30 AM</span><span class="end-t">12:00 PM</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card technical" data-scat="technical" data-id="ev-d2-6">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">CLASH OF MINDS (ROUND-2)</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-05]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">11:00 AM</span><span class="end-t">ONWARDS</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card non-technical" data-scat="non-technical" data-id="ev-d2-7">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">LAND OF LUDO</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-103]</div>
+                  </div>
+                </div>
+                <div class="tl-card non-technical" data-scat="non-technical" data-id="ev-d2-8">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">ESCAPE THE UNKNOWN</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-106]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">12:00 PM</span><span class="end-t">03:00 PM</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card technical" data-scat="technical" data-id="ev-d2-9">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">F1 ARENA (ROUND-2&3)</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-01]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">01:00 PM</span><span class="end-t">01:30 PM</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card default" data-scat="default" data-id="ev-d2-10">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">LUNCH BREAK</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [CAMPUS]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">01:30 PM</span><span class="end-t">03:30 PM</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card technical" data-scat="technical" data-id="ev-d2-11">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">ROBO SOCCER (R-3)</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [FRONT OF ELECTRICAL DEPT]</div>
+                  </div>
+                </div>
+                <div class="tl-card technical" data-scat="technical" data-id="ev-d2-12">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">GAME OF DRONES (ROUND-2)</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [SCET DOME]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-time-label"><span class="start-t">03:30 PM</span><span class="end-t">ONWARDS</span></div>
+              <div class="tl-dot"></div>
+              <div class="tl-cards">
+                <div class="tl-card default" data-scat="default" data-id="ev-d2-13">
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <div class="tl-title">OPEN MIC & PRIZE DISTRIBUTION</div>
+                  <div class="tl-details">
+                    <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-103]</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
     </div>
 
-    <div class="day-tabs" data-reveal>
-      <button class="day-tab active" data-day="1">DAY&nbsp;1</button>
-      <button class="day-tab" data-day="2">DAY&nbsp;2</button>
-    </div>
-
-    <div class="sched-filter" data-reveal>
-      <button class="sf-btn active" data-sf="all">ALL</button>
-      <button class="sf-btn" data-sf="technical">TECHNICAL</button>
-      <button class="sf-btn" data-sf="non-technical">NON-TECH</button>
-    </div>
-
-    <div id="timeline-d1" class="timeline">
-      <div class="tl-axis" aria-hidden="true"></div>
-      <div class="tl-node" data-scat="default"><div class="tl-dot default"></div><div class="tl-content"><div class="tl-time">09:00</div><div class="tl-name">Opening Ceremony</div><div class="tl-expand"><div class="tl-detail"><span class="tl-icon">&#x1F4CD;</span>Main Hall &nbsp; <span class="tl-icon">&#x23F1;</span>30 min</div></div></div></div>
-      <div class="tl-node" data-scat="technical"><div class="tl-dot technical"></div><div class="tl-content"><div class="tl-time">10:00</div><div class="tl-name">Circuit-X Prelims</div><div class="tl-expand"><div class="tl-detail"><span class="tl-icon">&#x1F4CD;</span>Lab 1 &nbsp; <span class="tl-icon">&#x23F1;</span>90 min</div></div></div></div>
-      <div class="tl-node" data-scat="non-technical"><div class="tl-dot non-technical"></div><div class="tl-content"><div class="tl-time">11:30</div><div class="tl-name">Spark Talk</div><div class="tl-expand"><div class="tl-detail"><span class="tl-icon">&#x1F4CD;</span>Seminar Hall &nbsp; <span class="tl-icon">&#x23F1;</span>60 min</div></div></div></div>
-      <div class="tl-node" data-scat="break"><div class="tl-dot break"></div><div class="tl-content"><div class="tl-time">13:00</div><div class="tl-name tl-break">&#x1F35D; Lunch Break</div></div></div>
-      <div class="tl-node" data-scat="technical"><div class="tl-dot technical"></div><div class="tl-content"><div class="tl-time">14:00</div><div class="tl-name">Code Spark</div><div class="tl-expand"><div class="tl-detail"><span class="tl-icon">&#x1F4CD;</span>Computer Lab &nbsp; <span class="tl-icon">&#x23F1;</span>120 min</div></div></div></div>
-      <div class="tl-node" data-scat="non-technical"><div class="tl-dot non-technical"></div><div class="tl-content"><div class="tl-time">16:00</div><div class="tl-name">Treasure Hunt</div><div class="tl-expand"><div class="tl-detail"><span class="tl-icon">&#x1F4CD;</span>Campus Wide &nbsp; <span class="tl-icon">&#x23F1;</span>60 min</div></div></div></div>
-      <div class="tl-node" data-scat="non-technical"><div class="tl-dot non-technical"></div><div class="tl-content"><div class="tl-time">18:00</div><div class="tl-name">Cultural Night</div><div class="tl-expand"><div class="tl-detail"><span class="tl-icon">&#x1F4CD;</span>Open Air Stage &nbsp; <span class="tl-icon">&#x23F1;</span>120 min</div></div></div></div>
-    </div>
-
-    <div id="timeline-d2" class="timeline" hidden>
-      <div class="tl-axis" aria-hidden="true"></div>
-      <div class="tl-node" data-scat="technical"><div class="tl-dot technical"></div><div class="tl-content"><div class="tl-time">09:00</div><div class="tl-name">Robo Rally</div><div class="tl-expand"><div class="tl-detail"><span class="tl-icon">&#x1F4CD;</span>Robotics Lab &nbsp; <span class="tl-icon">&#x23F1;</span>180 min</div></div></div></div>
-      <div class="tl-node" data-scat="technical"><div class="tl-dot technical"></div><div class="tl-content"><div class="tl-time">10:00</div><div class="tl-name">Tech Quiz</div><div class="tl-expand"><div class="tl-detail"><span class="tl-icon">&#x1F4CD;</span>Seminar Hall &nbsp; <span class="tl-icon">&#x23F1;</span>60 min</div></div></div></div>
-      <div class="tl-node" data-scat="technical"><div class="tl-dot technical"></div><div class="tl-content"><div class="tl-time">12:00</div><div class="tl-name">Paper Presentations</div><div class="tl-expand"><div class="tl-detail"><span class="tl-icon">&#x1F4CD;</span>Main Hall &nbsp; <span class="tl-icon">&#x23F1;</span>90 min</div></div></div></div>
-      <div class="tl-node" data-scat="non-technical"><div class="tl-dot non-technical"></div><div class="tl-content"><div class="tl-time">14:00</div><div class="tl-name">Photography Contest</div><div class="tl-expand"><div class="tl-detail"><span class="tl-icon">&#x1F4CD;</span>Campus &nbsp; <span class="tl-icon">&#x23F1;</span>120 min</div></div></div></div>
-      <div class="tl-node" data-scat="non-technical"><div class="tl-dot non-technical"></div><div class="tl-content"><div class="tl-time">16:00</div><div class="tl-name">Gaming Arena Finals</div><div class="tl-expand"><div class="tl-detail"><span class="tl-icon">&#x1F4CD;</span>Gaming Zone &nbsp; <span class="tl-icon">&#x23F1;</span>90 min</div></div></div></div>
-      <div class="tl-node" data-scat="default"><div class="tl-dot default"></div><div class="tl-content"><div class="tl-time">18:00</div><div class="tl-name">Prize Distribution &amp; Closing</div><div class="tl-expand"><div class="tl-detail"><span class="tl-icon">&#x1F4CD;</span>Main Hall &nbsp; <span class="tl-icon">&#x23F1;</span>60 min</div></div></div></div>
-    </div>
-  </section>
-</div>
-
-<!-- ==================== TAB: GALLERY ==================== -->
+  <!-- ==================== TAB: GALLERY ==================== -->
 <div class="tab-panel" id="tab-gallery" hidden>
-  <section class="page-section">
-    <div class="page-header" data-reveal>
-      <div class="page-label">SIGNAL ARCHIVED</div>
-      <h2 class="page-title">SIGNALS FROM THE PAST</h2>
-    </div>
-    <div class="gallery-chips" data-reveal>
-      <button class="gchip active" data-gf="all">ALL</button>
-      <button class="gchip" data-gf="circuit-x">CIRCUIT-X</button>
-      <button class="gchip" data-gf="cultural">CULTURAL</button>
-      <button class="gchip" data-gf="robo-rally">ROBO RALLY</button>
-      <button class="gchip" data-gf="other">OTHER</button>
-    </div>
-    <div class="gallery-grid" id="gallery-grid">
-      <div class="gitem col2 row2" data-ge="cultural"><img src="https://picsum.photos/seed/urja1/600/600" alt="Cultural Night 2025" loading="lazy"><div class="gitem-label">Cultural Night</div></div>
-      <div class="gitem" data-ge="circuit-x"><img src="https://picsum.photos/seed/urja2/300/300" alt="Circuit-X 2025" loading="lazy"><div class="gitem-label">Circuit-X</div></div>
-      <div class="gitem" data-ge="robo-rally"><img src="https://picsum.photos/seed/urja3/300/300" alt="Robo Rally 2025" loading="lazy"><div class="gitem-label">Robo Rally</div></div>
-      <div class="gitem" data-ge="circuit-x"><img src="https://picsum.photos/seed/urja4/300/300" alt="Circuit-X 2025" loading="lazy"><div class="gitem-label">Circuit-X</div></div>
-      <div class="gitem row2" data-ge="other"><img src="https://picsum.photos/seed/urja5/300/500" alt="Opening 2025" loading="lazy"><div class="gitem-label">Opening</div></div>
-      <div class="gitem" data-ge="circuit-x"><img src="https://picsum.photos/seed/urja6/300/300" alt="Circuit-X Finals" loading="lazy"><div class="gitem-label">Circuit-X Finals</div></div>
-      <div class="gitem" data-ge="other"><img src="https://picsum.photos/seed/urja7/300/300" alt="Prize Dist 2025" loading="lazy"><div class="gitem-label">Prize Dist.</div></div>
-      <div class="gitem col2" data-ge="cultural"><img src="https://picsum.photos/seed/urja8/600/300" alt="Cultural Stage 2025" loading="lazy"><div class="gitem-label">Cultural Stage</div></div>
-      <div class="gitem" data-ge="robo-rally"><img src="https://picsum.photos/seed/urja9/300/300" alt="Robo Arena 2025" loading="lazy"><div class="gitem-label">Robo Arena</div></div>
-      <div class="gitem" data-ge="other"><img src="https://picsum.photos/seed/urja10/300/300" alt="Team 2025" loading="lazy"><div class="gitem-label">Team Photo</div></div>
-    </div>
-  </section>
-</div>
+    <section class="page-section">
+      <div class="page-header" data-reveal>
+        <div class="page-label">SIGNAL ARCHIVED</div>
+        <h2 class="page-title">GALLERY</h2>
+      </div>
 
-<!-- ==================== TAB: TEAMS ==================== -->
-<div class="tab-panel" id="tab-teams" hidden>
-  <section class="page-section">
-    <div class="page-header" data-reveal>
-      <div class="page-label">NETWORK CONNECTED</div>
-      <h2 class="page-title">THE NETWORK</h2>
-      <p class="page-sub">Every great signal needs people to carry it forward.</p>
-    </div>
-    <div class="team-filter" data-reveal>
-      <button class="tf-btn active" data-tf="all">ALL</button>
-      <button class="tf-btn" data-tf="faculty">FACULTY</button>
-      <button class="tf-btn" data-tf="core-team">CORE TEAM</button>
-      <button class="tf-btn" data-tf="event-teams">EVENT TEAMS</button>
-      <button class="tf-btn" data-tf="creative">CREATIVE</button>
-      <button class="tf-btn" data-tf="volunteers">VOLUNTEERS</button>
-    </div>
-    <div class="team-grid">
-      <div class="mcard faculty" data-tc="faculty"><div class="mphoto"><img src="https://i.pravatar.cc/150?img=60" alt="Dr. Suresh Patel" loading="lazy"></div><div class="mname">Dr. Suresh Patel</div><div class="mrole">Head of Department</div></div>
-      <div class="mcard faculty" data-tc="faculty"><div class="mphoto"><img src="https://i.pravatar.cc/150?img=57" alt="Prof. Anita Sharma" loading="lazy"></div><div class="mname">Prof. Anita Sharma</div><div class="mrole">Faculty Coordinator</div></div>
-      <div class="mcard faculty" data-tc="faculty"><div class="mphoto"><img src="https://i.pravatar.cc/150?img=49" alt="Prof. Ramesh Kumar" loading="lazy"></div><div class="mname">Prof. Ramesh Kumar</div><div class="mrole">Faculty Coordinator</div></div>
-      <div class="mcard core-team" data-tc="core-team"><div class="mphoto"><img src="https://i.pravatar.cc/150?img=12" alt="Arjun Mehta" loading="lazy"></div><div class="mname">Arjun Mehta</div><div class="mrole">Fest Secretary</div></div>
-      <div class="mcard core-team" data-tc="core-team"><div class="mphoto"><img src="https://i.pravatar.cc/150?img=25" alt="Priya Nair" loading="lazy"></div><div class="mname">Priya Nair</div><div class="mrole">Joint Secretary</div></div>
-      <div class="mcard core-team" data-tc="core-team"><div class="mphoto"><img src="https://i.pravatar.cc/150?img=32" alt="Rohan Verma" loading="lazy"></div><div class="mname">Rohan Verma</div><div class="mrole">Treasurer</div></div>
-      <div class="mcard event-teams" data-tc="event-teams"><div class="mphoto"><img src="https://i.pravatar.cc/150?img=18" alt="Kavya Reddy" loading="lazy"></div><div class="mname">Kavya Reddy</div><div class="mrole">Technical Head</div></div>
-      <div class="mcard event-teams" data-tc="event-teams"><div class="mphoto"><img src="https://i.pravatar.cc/150?img=35" alt="Vikram Joshi" loading="lazy"></div><div class="mname">Vikram Joshi</div><div class="mrole">Non-Tech Head</div></div>
-      <div class="mcard event-teams" data-tc="event-teams"><div class="mphoto"><img src="https://i.pravatar.cc/150?img=44" alt="Sneha Pillai" loading="lazy"></div><div class="mname">Sneha Pillai</div><div class="mrole">Logistics</div></div>
-      <div class="mcard creative" data-tc="creative"><div class="mphoto"><img src="https://i.pravatar.cc/150?img=23" alt="Neha Gupta" loading="lazy"></div><div class="mname">Neha Gupta</div><div class="mrole">Design Head</div></div>
-      <div class="mcard creative" data-tc="creative"><div class="mphoto"><img src="https://i.pravatar.cc/150?img=15" alt="Aditya Singh" loading="lazy"></div><div class="mname">Aditya Singh</div><div class="mrole">Content Head</div></div>
-      <div class="mcard creative" data-tc="creative"><div class="mphoto"><img src="https://i.pravatar.cc/150?img=38" alt="Riya Sharma" loading="lazy"></div><div class="mname">Riya Sharma</div><div class="mrole">Social Media</div></div>
-      <div class="mcard volunteers" data-tc="volunteers"><div class="mphoto"><img src="https://i.pravatar.cc/150?img=5" alt="Ankit Kumar" loading="lazy"></div><div class="mname">Ankit Kumar</div><div class="mrole">Volunteer</div></div>
-      <div class="mcard volunteers" data-tc="volunteers"><div class="mphoto"><img src="https://i.pravatar.cc/150?img=9" alt="Pooja Menon" loading="lazy"></div><div class="mname">Pooja Menon</div><div class="mrole">Volunteer</div></div>
-      <div class="mcard volunteers" data-tc="volunteers"><div class="mphoto"><img src="https://i.pravatar.cc/150?img=20" alt="Siddharth Rao" loading="lazy"></div><div class="mname">Siddharth Rao</div><div class="mrole">Volunteer</div></div>
-      <div class="mcard volunteers" data-tc="volunteers"><div class="mphoto"><img src="https://i.pravatar.cc/150?img=41" alt="Divya Krishnan" loading="lazy"></div><div class="mname">Divya Krishnan</div><div class="mrole">Volunteer</div></div>
-    </div>
-  </section>
-</div>
+      <!-- Gallery Sub-Tabs Toggle -->
+      <div class="freq-dial-wrap" data-reveal style="margin-bottom: 30px;">
+        <div class="brain-labels" style="max-width: 400px; margin: 0 auto;">
+          <span class="bl-left active" id="gal-btn-memories"  style="cursor:pointer;">MEMORIES</span>
+          <span class="bl-right" id="gal-btn-current"  style="cursor:pointer;">URJA 2K26</span>
+        </div>
+      </div>
 
-<!-- ==================== TAB: SPONSORS ==================== -->
+      <!-- ==================== MEMORIES (PAST EVENTS) ==================== -->
+      <div id="gallery-memories">
+        <p style="text-align: center; color: var(--dimmer); font-size: 14px; margin-bottom: 30px;" data-reveal>Glimpses from the previous edition of URJA.</p>
+        
+        <div class="gallery-grid">
+          <div data-reveal class="gitem col2 row2"><img src="./GALLERY/1.jpg" alt="Memory" loading="lazy" onerror="this.src='https://placehold.co/600x600/1a1a1f/F2B33D?text=Photo+1'"><div class="gitem-label">Memory</div></div>
+          <div data-reveal class="gitem"><img src="./GALLERY/2.jpg" alt="Memory" loading="lazy" onerror="this.src='https://placehold.co/600x600/1a1a1f/F2B33D?text=Photo+2'"><div class="gitem-label">Memory</div></div>
+          <div data-reveal class="gitem"><img src="./GALLERY/3.jpg" alt="Memory" loading="lazy" onerror="this.src='https://placehold.co/600x600/1a1a1f/F2B33D?text=Photo+3'"><div class="gitem-label">Memory</div></div>
+          <div data-reveal class="gitem row2"><img src="./GALLERY/4.jpg" alt="Memory" loading="lazy" onerror="this.src='https://placehold.co/600x600/1a1a1f/F2B33D?text=Photo+4'"><div class="gitem-label">Memory</div></div>
+          <div data-reveal class="gitem"><img src="./GALLERY/5.jpg" alt="Memory" loading="lazy" onerror="this.src='https://placehold.co/600x600/1a1a1f/F2B33D?text=Photo+5'"><div class="gitem-label">Memory</div></div>
+          <div data-reveal class="gitem"><img src="./GALLERY/6.jpg" alt="Memory" loading="lazy" onerror="this.src='https://placehold.co/600x600/1a1a1f/F2B33D?text=Photo+6'"><div class="gitem-label">Memory</div></div>
+          <div data-reveal class="gitem col2 row2"><img src="./GALLERY/7.jpg" alt="Memory" loading="lazy" onerror="this.src='https://placehold.co/600x600/1a1a1f/F2B33D?text=Photo+7'"><div class="gitem-label">Memory</div></div>
+          <div data-reveal class="gitem"><img src="./GALLERY/8.jpg" alt="Memory" loading="lazy" onerror="this.src='https://placehold.co/600x600/1a1a1f/F2B33D?text=Photo+8'"><div class="gitem-label">Memory</div></div>
+          <div data-reveal class="gitem row2"><img src="./GALLERY/9.jpg" alt="Memory" loading="lazy" onerror="this.src='https://placehold.co/600x600/1a1a1f/F2B33D?text=Photo+9'"><div class="gitem-label">Memory</div></div>
+          <div data-reveal class="gitem"><img src="./GALLERY/10.jpg" alt="Memory" loading="lazy" onerror="this.src='https://placehold.co/600x600/1a1a1f/F2B33D?text=Photo+10'"><div class="gitem-label">Memory</div></div>
+          <div data-reveal class="gitem col2"><img src="./GALLERY/11.jpg" alt="Memory" loading="lazy" onerror="this.src='https://placehold.co/600x600/1a1a1f/F2B33D?text=Photo+11'"><div class="gitem-label">Memory</div></div>
+        </div>
+
+        <div style="text-align: center; margin-top: 50px;" data-reveal>
+          <a href="https://drive.google.com/drive/folders/11KRFPRVckNxKhe-JcLN5s2fn3MyDPQ0E" target="_blank" rel="noopener" class="btn-ghost" style="display: inline-flex; align-items: center; justify-content: center; width: 100%; max-width: 300px; margin: 0 auto;">VIEW ALL ARCHIVES &rarr;</a>
+        </div>
+      </div>
+
+      <!-- ==================== URJA 2K26 (CURRENT EVENTS) ==================== -->
+      <div id="gallery-current" hidden>
+        <p style="text-align: center; color: var(--dimmer); font-size: 14px; margin-bottom: 30px;" data-reveal>Live uploads from the URJA 2K26 committees.</p>
+        
+        <!-- Filters -->
+        <div class="gallery-chips" data-reveal style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 30px;">
+          <button class="gchip active" data-gf="all">ALL</button>
+          <button class="gchip" data-gf="faces-of-urja">FACES OF URJA</button>
+          <button class="gchip" data-gf="decoration">DECORATION</button>
+          <button class="gchip" data-gf="aavishkar">AAVISHKAR</button>
+          <button class="gchip" data-gf="robo-soccer">ROBO SOCCER</button>
+          <button class="gchip" data-gf="f1-arena">F1 ARENA</button>
+          <button class="gchip" data-gf="sync">SYNC</button>
+        </div>
+        
+        <!-- Dynamic Grid Container -->
+        <div class="gallery-grid" id="dynamic-gallery-grid">
+          <!-- Javascript will inject images here -->
+        </div>
+      </div>
+      
+    </section>
+  </div>
+  
+  <!-- ==================== TAB: TEAMS ==================== -->
+  <div class="tab-panel" id="tab-teams" hidden>
+    <section class="page-section">
+      <div class="page-header" data-reveal>
+        <div class="page-label">NETWORK TOPOLOGY</div>
+        <h2 class="page-title">THE TEAM</h2>
+      </div>
+
+      <div class="teams-container">
+        
+        <!-- TIER 3: Student Convenors -->
+        <div class="team-tier tier-3" data-reveal>
+           <div class="t-node-label">STUDENT CONVENORS</div>
+           <div class="t3-list">
+              <div class="t3-row"><span>Meet Surti</span><span class="t-role">Convenor</span></div>
+              <div class="t3-row"><span>Mohit Bhanabhagvanwala</span><span class="t-role">Convenor</span></div>
+              <div class="t3-row"><span>Nayan Surti</span><span class="t-role">Convenor</span></div>
+           </div>
+        </div>
+
+        <!-- TIER 4: Committee Heads -->
+        <div class="team-tier tier-4" data-reveal>
+           <div class="t-node-label">FUNCTION NODES (COMMITTEE HEADS)</div>
+           <div class="t4-cards">
+              
+              <div class="t4-card">
+                 <div class="t4-header" style="color:var(--amber-l);"><span class="t-dot" style="background:var(--amber-l);"></span> DECORATION</div>
+                 <div class="pulse-divider"><div class="pulse-dot" style="background:var(--amber-l); box-shadow: 0 0 8px var(--amber-l);"></div></div>
+                 <div class="t4-members">
+                    <div class="t4-row"><span>Dhruti Parmar</span><span class="t-role">Head</span></div>
+                    <div class="t4-row"><span>Revathy Nair</span><span class="t-role">Head</span></div>
+                    <div class="t4-row"><span>Kashyap</span><span class="t-role">Head</span></div>
+                 </div>
+              </div>
+              
+              <div class="t4-card">
+                 <div class="t4-header" style="color:var(--blue-l);"><span class="t-dot" style="background:var(--blue-l);"></span> INTERACTIVE RELATIONS (IR)</div>
+                 <div class="pulse-divider"><div class="pulse-dot" style="background:var(--blue-l); box-shadow: 0 0 8px var(--blue-l);"></div></div>
+                 <div class="t4-members">
+                    <div class="t4-row"><span>Aditya</span><span class="t-role">Head</span></div>
+                    <div class="t4-row"><span>Het</span><span class="t-role">Head</span></div>
+                    <div class="t4-row"><span>Yuvraj</span><span class="t-role">Head</span></div>
+                 </div>
+              </div>
+
+              <div class="t4-card">
+                 <div class="t4-header"><span class="t-dot"></span> PHOTOGRAPHY</div>
+                 <div class="pulse-divider"><div class="pulse-dot"></div></div>
+                 <div class="t4-members">
+                    <div class="t4-row"><span>Arun</span><span class="t-role">Head</span></div>
+                    <div class="t4-row"><span>Yash</span><span class="t-role">Head</span></div>
+                 </div>
+              </div>
+
+              <div class="t4-card">
+                 <div class="t4-header" style="color:var(--blue-l);"><span class="t-blue-dot"></span> PUBLIC RELATIONS (PR)</div>
+                 <div class="pulse-divider"><div class="pulse-dot blue"></div></div>
+                 <div class="t4-members">
+                    <div class="t4-row"><span>Jay</span><span class="t-role">Head</span></div>
+                    <div class="t4-row"><span>Megh</span><span class="t-role">Head</span></div>
+                    <div class="t4-row"><span>Yug</span><span class="t-role">Head</span></div>
+                 </div>
+              </div>
+
+           </div>
+        </div>
+
+        <!-- TIER 5: Event Heads -->
+        <div class="team-tier tier-5" data-reveal>
+           <div class="t-node-label">EVENT NODES (EVENT HEADS)</div>
+           <div class="t5-grid">
+              <div class="t-item"><div class="t-blue-dot"></div><span>Alok Das</span></div><div class="t-item"><div class="t-dot"></div><span>Ayush Gandhi</span></div><div class="t-item"><div class="t-blue-dot"></div><span>Bhavya T.</span></div><div class="t-item"><div class="t-dot"></div><span>Daksh Patel</span></div><div class="t-item"><div class="t-blue-dot"></div><span>Durva Patel</span></div><div class="t-item"><div class="t-dot"></div><span>Jahan</span></div><div class="t-item"><div class="t-blue-dot"></div><span>Jay</span></div><div class="t-item"><div class="t-dot"></div><span>Jiya Patel</span></div><div class="t-item"><div class="t-blue-dot"></div><span>Kanhai Trivedi</span></div><div class="t-item"><div class="t-dot"></div><span>Kavya Khandwala</span></div><div class="t-item"><div class="t-blue-dot"></div><span>Kalyan Kapadia</span></div><div class="t-item"><div class="t-dot"></div><span>Mihir Parekh</span></div><div class="t-item"><div class="t-blue-dot"></div><span>Prisha Gandhi</span></div><div class="t-item"><div class="t-dot"></div><span>Ridham</span></div><div class="t-item"><div class="t-blue-dot"></div><span>Sarvagna</span></div><div class="t-item"><div class="t-dot"></div><span>Shivam Vaishnav</span></div><div class="t-item"><div class="t-blue-dot"></div><span>Vansh Patel</span></div><div class="t-item"><div class="t-dot"></div><span>Vishwa Patel</span></div><div class="t-item"><div class="t-blue-dot"></div><span>Vivek Parmar</span></div><div class="t-item"><div class="t-dot"></div><span>Yash Hingu</span></div><div class="t-item"><div class="t-blue-dot"></div><span>Yash Jinwala</span></div><div class="t-item"><div class="t-dot"></div><span>Yashasvi Agrawal</span></div><div class="t-item"><div class="t-blue-dot"></div><span>Yug</span></div>
+           </div>
+        </div>
+
+        <!-- TIER 6: Volunteers -->
+        <div class="team-tier tier-6" id="volunteer-section">
+           <div class="t-node-label"><span class="t-dot"></span> TERMINAL NODES (VOLUNTEERS) — 53 NODES</div>
+           <div class="pulse-divider"><div class="pulse-dot"></div></div>
+           
+           <div class="t6-grid" id="vol-grid">
+              <!-- JS Injects 53 Volunteers Here -->
+           </div>
+           
+           <button class="btn-ghost" id="vol-show-all" style="font-size: 11px; padding: 6px 12px; margin-top: 10px;">SHOW ALL</button>
+           
+           <div class="terminal-line" id="term-line">
+              ✓ NETWORK CONNECTED — 90 NODES ONLINE
+           </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+  
+  <!-- ==================== TAB: SPONSORS ==================== -->
 <div class="tab-panel" id="tab-sponsors" hidden>
   <section class="page-section">
     <div class="page-header" data-reveal>
       <div class="page-label">POWER SUPPLIED</div>
-      <h2 class="page-title">POWERING THE SIGNAL</h2>
+      <h2 class="page-title">SPONSORS</h2>
     </div>
     <div class="sponsor-tiers">
-      <div class="stier" data-reveal><div class="stier-label">TITLE SPONSOR</div><div class="scard title"><div class="scard-text">TITLE SPONSOR<br><span>Your Logo Here</span></div></div></div>
-      <div class="stier" data-reveal><div class="stier-label">GOLD SPONSORS</div><div class="sgrid gold"><div class="scard"><div class="scard-text">GOLD SPONSOR 1</div></div><div class="scard"><div class="scard-text">GOLD SPONSOR 2</div></div></div></div>
-      <div class="stier" data-reveal><div class="stier-label">SILVER SPONSORS</div><div class="sgrid silver"><div class="scard"><div class="scard-text" style="font-size:12px">SILVER 1</div></div><div class="scard"><div class="scard-text" style="font-size:12px">SILVER 2</div></div><div class="scard"><div class="scard-text" style="font-size:12px">SILVER 3</div></div></div></div>
-      <div class="stier" data-reveal><div class="stier-label">PARTNERS</div><div class="sgrid partners"><div class="scard sm"><div class="scard-text" style="font-size:11px">PARTNER 1</div></div><div class="scard sm"><div class="scard-text" style="font-size:11px">PARTNER 2</div></div><div class="scard sm"><div class="scard-text" style="font-size:11px">PARTNER 3</div></div><div class="scard sm"><div class="scard-text" style="font-size:11px">PARTNER 4</div></div></div></div>
+      <div class="stier" data-reveal><div class="stier-label">POWERED BY</div><div class="scard title"><img src="./powered by.jpeg" alt="Powered By"></div></div>
+      <div class="stier" data-reveal><div class="stier-label" style="color: var(--blue-l); border-bottom-color: rgba(58,160,255,0.2);">CO-POWERED BY</div><div class="sgrid gold" style="grid-template-columns: 1fr;"><div class="scard"><img src="./copowered by.jpeg" alt="Co-Powered By"></div></div></div>
+      </div>
+      </div>
     </div>
   </section>
 </div>
 
+<footer id="footer">
+      <div class="footer-pulse" aria-hidden="true">
+        <svg width="100%" height="30" viewBox="0 0 800 30" preserveAspectRatio="none">
+          <path d="M0,15 Q100,15 140,15 L170,3 L185,27 L200,10 L215,22 L230,15 Q350,15 400,15 Q500,15 530,15 L570,3 L585,27 L600,10 L615,22 L630,15 Q750,15 800,15" fill="none" stroke="#3AA0FF" stroke-width="1" stroke-dasharray="1600" stroke-dashoffset="1600">
+            <animate attributeName="stroke-dashoffset" from="1600" to="-1600" dur="6s" repeatCount="indefinite"/>
+          </path>
+        </svg>
+      </div>
+      <div class="footer-inner">
+        <div class="footer-terminal">● TRANSMISSION COMPLETE</div>
+        
+        <div class="footer-brand">URJA <span style="color:var(--blue-l)">2K26</span></div>
+        <p class="footer-sub">One Spark, Endless Connections</p>
+        <p class="footer-date">SEPTEMBER 18-19, 2026<br>Sarvajanik College of Engineering & Technology, Surat</p>
+        
+        <a href="https://www.instagram.com/urja2k26" target="_blank" rel="noopener" class="footer-ig" aria-label="Instagram" style="margin: 0 auto 16px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          @urja2k26
+        </a>
+        
+        <div class="footer-divider"></div>
+        
+        <div class="footer-guidance-label">UNDER THE GUIDANCE OF</div>
+        <div class="footer-hod">
+          <strong>Dr. Hardik Desai, Head of Department</strong><br>
+          <span style="color:var(--dimmer)">Dept. of Electrical Engineering</span>
+        </div>
+        
+        <div class="footer-fac-section">
+          <div class="footer-fac-title">Fest Coordinators:</div>
+          <div class="footer-fac-list">
+            <span>Prof. Sandhya Rathore</span>
+            <span>Prof. Kriti Arora</span>
+          </div>
+        </div>
+
+        <div class="footer-fac-section">
+          <div class="footer-fac-title">Faculty Coordinators:</div>
+          <div class="footer-fac-grid">
+            <span>Prof. Aditi Hajari</span>
+            <span>Prof. Jyoti Shah</span>
+            <span>Prof. Naman Bhatt</span>
+            <span>Prof. Nilesh Shah</span>
+            <span>Prof. Shabbir Bohra</span>
+            <span>Prof. Sharad Patel</span>
+          </div>
+        </div>
+
+        <p class="footer-copy">&copy; 2026 URJA - All Rights Reserved &nbsp;|&nbsp; Made by Bhavya Tharakan</p>
+      </div>
+    </footer>
 </main>
 
 <script src="app.js" defer></script>
+  <script src="gallery-app.js" defer></script>
 <script>
 if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
 </script>
+  <script src="teams-app.js" defer></script>
 </body>
 </html>
+

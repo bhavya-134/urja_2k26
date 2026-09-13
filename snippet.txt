@@ -1,0 +1,14 @@
+ove('fired');
+        }
+      });
+    }, { rootMargin: '-50% 0px -40% 0px' });
+    
+    document.querySelectorAll('.timeline:not([hidden]) .tl-slot').forEach(n => {
+      if(n.style.display !== 'none') axonObserver.observe(n);
+    });
+  }
+    // ============================================================ ΓÇö filter + lightbox
+  // ============================================================
+  
+  // Lightbox
+  const lb = document.getElementById('
