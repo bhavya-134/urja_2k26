@@ -12,7 +12,7 @@
   const neuralCanvas = document.getElementById('neural-canvas');
   const nCtx = neuralCanvas ? neuralCanvas.getContext('2d') : null;
   let nW = 0, nH = 0, nNodes = [], nMouse = { x: -999, y: -999 };
-  const NODE_COUNT = 60, LINK_DIST = 130;
+  const NODE_COUNT = 35, LINK_DIST = 130;
 
   function resizeNeural() {
     nW = neuralCanvas.width = window.innerWidth;
