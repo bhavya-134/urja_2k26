@@ -1,4 +1,4 @@
-﻿const { google } = require('googleapis');
+const { google } = require('googleapis');
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
