@@ -87,12 +87,7 @@ window.GALLERY_FOLDERS = {
 
       let html = '';
       allImages.forEach((img, i) => {
-        let spanClass = '';
-        if (i % 7 === 0) spanClass = 'col2 row2';
-        else if (i % 5 === 0) spanClass = 'row2';
-        else if (i % 11 === 0) spanClass = 'col2';
-
-        html += `<div data-reveal class="gitem visible ${spanClass}">
+        html += `<div data-reveal class="gitem visible" style="aspect-ratio: 1/1;">
                    <img src="${img.url}" alt="${img.name}" loading="lazy">
                    <div class="gitem-label">${img.name}</div>
                  </div>`;
