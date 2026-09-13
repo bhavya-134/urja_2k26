@@ -1,4 +1,7 @@
-const { google } = require('googleapis');
+﻿import re
+
+api_path = 'api/gallery.js'
+content = """const { google } = require('googleapis');
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -21,7 +24,7 @@ export default async function handler(req, res) {
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\\\n/g, '\\n'),
       },
       scopes: ['https://www.googleapis.com/auth/drive.readonly'],
     });
@@ -48,3 +51,8 @@ export default async function handler(req, res) {
     res.status(500).json({ error: 'Failed to fetch images from Google Drive: ' + error.message });
   }
 }
+"""
+
+with open(api_path, 'w', encoding='utf-8', newline='\n') as f:
+    f.write(content)
+print("Rewrote api/gallery.js with fixed template literals!")

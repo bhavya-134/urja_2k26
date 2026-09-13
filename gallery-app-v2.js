@@ -70,10 +70,14 @@ window.GALLERY_FOLDERS = {
     try {
       for (const fId of idsToFetch) {
         const res = await fetch('/api/gallery?folderId=' + fId);
-        if (res.ok) {
-          const data = await res.json();
-          allImages = allImages.concat(data);
-        }
+          if (res.ok) {
+            const data = await res.json();
+            allImages = allImages.concat(data);
+          } else {
+            const errText = await res.text();
+            grid.innerHTML = `<div style="color: red; text-align: center; width: 100%; grid-column: 1 / -1; padding: 40px;" class="visible">API ERROR (${res.status}): ${errText}</div>`;
+            return;
+          }
       }
 
       if (allImages.length === 0) {
