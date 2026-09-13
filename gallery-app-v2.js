@@ -59,18 +59,19 @@ window.GALLERY_FOLDERS = {
     chips.forEach(c => c.classList.toggle('active', c.dataset.gf === category));
 
     const folderIds = window.GALLERY_FOLDERS[category];
-    if (!folderIds || (Array.isArray(folderIds) ? folderIds.length === 0 : folderIds === '')) {
-      grid.innerHTML = '<div style="color: var(--dimmer); text-align: center; width: 100%; grid-column: 1 / -1; padding: 40px;" class="visible">Nothing is uploaded yet. Awaiting committee sync...</div>';
-      return;
-    }
-
-    // Auto-populate 'all' tab if it's the all category
       let idsToFetch = Array.isArray(folderIds) ? folderIds : [folderIds];
+      
+      // Auto-populate 'all' tab BEFORE checking if it's empty
       if (category === 'all' && idsToFetch.length === 0) {
         idsToFetch = [];
         for (const [k, v] of Object.entries(window.GALLERY_FOLDERS)) {
           if (k !== 'all' && v) idsToFetch.push(v);
         }
+      }
+
+      if (idsToFetch.length === 0 || (idsToFetch.length === 1 && idsToFetch[0] === '')) {
+        grid.innerHTML = '<div style="color: var(--dimmer); text-align: center; width: 100%; grid-column: 1 / -1; padding: 40px;" class="visible">Nothing is uploaded yet. Awaiting committee sync...</div>';
+        return;
       }
       
       let allImages = [];
