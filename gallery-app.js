@@ -29,21 +29,21 @@ window.GALLERY_FOLDERS = {
     btnMemories.addEventListener('click', () => {
       btnMemories.classList.add('active');
       btnCurrent.classList.remove('active');
-      viewMemories.style.display = 'block';
-      viewCurrent.style.display = 'none';
+      viewMemories.style.display = 'block'; viewMemories.removeAttribute('hidden');
+      viewCurrent.style.display = 'none'; viewCurrent.setAttribute('hidden', '');
       viewMemories.querySelectorAll('[data-reveal]').forEach(el => el.classList.add('visible'));
     });
     
     btnCurrent.addEventListener('click', () => {
       btnCurrent.classList.add('active');
       btnMemories.classList.remove('active');
-      viewCurrent.style.display = 'block';
-      viewMemories.style.display = 'none';
+      viewCurrent.style.display = 'block'; viewCurrent.removeAttribute('hidden');
+      viewMemories.style.display = 'none'; viewMemories.setAttribute('hidden', '');
       viewCurrent.querySelectorAll('[data-reveal]').forEach(el => el.classList.add('visible'));
     });
     
-    viewMemories.style.display = 'block';
-    viewCurrent.style.display = 'none';
+    viewMemories.style.display = 'block'; viewMemories.removeAttribute('hidden');
+      viewCurrent.style.display = 'none'; viewCurrent.setAttribute('hidden', '');
     setTimeout(() => {
       viewMemories.querySelectorAll('[data-reveal]').forEach(el => el.classList.add('visible'));
     }, 100);
