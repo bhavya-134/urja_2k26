@@ -64,23 +64,34 @@ window.GALLERY_FOLDERS = {
       return;
     }
 
-    const idsToFetch = Array.isArray(folderIds) ? folderIds : [folderIds];
-    let allImages = [];
-
-    try {
-      for (const fId of idsToFetch) {
-        const res = await fetch('/api/gallery?folderId=' + fId);
-          if (res.ok) {
-            const data = await res.json();
-            allImages = allImages.concat(data);
-          } else {
-            const errText = await res.text();
-            grid.innerHTML = `<div style="color: red; text-align: center; width: 100%; grid-column: 1 / -1; padding: 40px;" class="visible">API ERROR (${res.status}): ${errText}</div>`;
-            return;
-          }
+    // Auto-populate 'all' tab if it's the all category
+      let idsToFetch = Array.isArray(folderIds) ? folderIds : [folderIds];
+      if (category === 'all' && idsToFetch.length === 0) {
+        idsToFetch = [];
+        for (const [k, v] of Object.entries(window.GALLERY_FOLDERS)) {
+          if (k !== 'all' && v) idsToFetch.push(v);
+        }
       }
-
-      if (allImages.length === 0) {
+      
+      let allImages = [];
+  
+      try {
+        // Fetch all folders simultaneously for maximum speed
+        const fetchPromises = idsToFetch.map(fId => 
+          fetch('/api/gallery?folderId=' + fId).then(res => res.ok ? res.json() : [])
+        );
+        const results = await Promise.all(fetchPromises);
+        results.forEach(data => allImages = allImages.concat(data));
+  
+        // Shuffle the 'all' array so different events are mixed beautifully
+        if (category === 'all') {
+          for (let i = allImages.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [allImages[i], allImages[j]] = [allImages[j], allImages[i]];
+          }
+        }
+  
+        if (allImages.length === 0) {
         grid.innerHTML = '<div style="color: var(--dimmer); text-align: center; width: 100%; grid-column: 1 / -1; padding: 40px;" class="visible">Folder is currently empty or API keys missing.</div>';
         return;
       }

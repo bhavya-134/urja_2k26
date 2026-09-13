@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     const response = await drive.files.list({
       q: `'${folderId}' in parents and mimeType contains 'image/' and trashed = false`,
       fields: 'files(id, name, mimeType)',
-      pageSize: 50,
+      pageSize: 200,
     });
 
     const files = response.data.files;
