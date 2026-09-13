@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = 'urja-2k26-v16';
+﻿const CACHE_NAME = 'urja-2k26-v17';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -7,7 +7,7 @@ const STATIC_ASSETS = [
   '/loader.js',
   '/events.js',
   '/schedule.js',
-  '/gallery.js',
+  
   '/touch-trail.js',
   '/manifest.json',
   'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap'
