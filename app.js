@@ -302,9 +302,8 @@
     function openModal(card) {
       const cat = card.dataset.cat || 'technical';
       const fee = card.dataset.fee || 'FREE'; const isFree = fee === 'FREE';
-      const iconSvg = cat === 'technical'
-        ? '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07M4.93 4.93a10 10 0 000 14.14M8.46 8.46a5 5 0 000 7.07"/></svg>'
-        : '<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>';
+      const iconDiv = card.querySelector('.ecard-icon');
+      const iconSvg = iconDiv ? iconDiv.innerHTML : '';
       
       // Card micro-interaction
       card.style.transform = 'scale(0.95)';
