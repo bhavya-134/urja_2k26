@@ -4,12 +4,19 @@
 // ==========================================
 window.GALLERY_FOLDERS = {
   'all': [],
-  'faces-of-urja': '',
-  'decoration': '',
-  'aavishkar': '',
-  'f1-arena': '',
-  'sync': '',
-  'robo-soccer': ''
+  'faces-of-urja': '1FcBN3XDFI1EaGF8_BYo32MXgz0sOYJwc',
+  'decoration': '15UuVrTpl4BwvEHFfBG5PaAdgNlosDRG4',
+  'aavishkar': '1-IiZ2RgbBHEOtA5xr4q96-vGkVj1IYpj',
+  'f1-arena': '1WRO_4ZZO9KlCf1EggBrvRogYa52lcU99',
+  'sync': '1R9N-o3Ync67tXlq-zy-C-uua1FYvnnq5',
+  'power-up': '10ALIJTnDRi5YqGgmOrNPutoqdnnAgaYL',
+  'abhivyakti': '1za0r7_iJHhJ8Z6RsBG19dxbvzXyY7j-8',
+  'human-ludo': '18Ra-tq2T6DeyEDMebzpBGGTX5tZbmJ7R',
+  'game-of-drones': '14TMqd7PTSOIo4zxMpEpo7HbiphAaYADw',
+  'quiz-whiz': '1Ojcay4X3QwV0vv6k-6zOPzYcNqSkxqoq',
+  'escape': '1RQzMq1OE0gDk0WUPd0C8Gq50VTvHVRBR',
+  'clash-of-minds': '1A44_IMt9Q0eN0us-dvBlqTJR1Q0xq4CD',
+  'robo-soccer': '1Jmm__VANf3PXwE02P8RjbGj_Qj9LPQ51'
 };
 
 (function initGallery() {
