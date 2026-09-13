@@ -369,9 +369,7 @@
   if (backdrop) backdrop.addEventListener('click', closeModal);
   let mTY = 0;
   if (modal) {
-    modal.addEventListener('touchstart', e => { mTY = e.touches[0].clientY; }, { passive: true });
-    modal.addEventListener('touchmove', e => { const dy = e.touches[0].clientY - mTY; if (dy > 0) modal.style.transform = `translateY(${dy}px)`; }, { passive: true });
-    modal.addEventListener('touchend', e => { const dy = e.changedTouches[0].clientY - mTY; modal.style.transform = ''; if (dy > 100) closeModal(); }, { passive: true });
+    
   }
 
   // ============================================================
