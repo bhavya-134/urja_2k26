@@ -15,6 +15,23 @@
 </head>
 <body>
 
+<script>
+  // ONE-TIME CACHE NUKE TO FORCE MOBILE PHONES TO UPDATE
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      let shouldReload = false;
+      for(let registration of registrations) {
+        registration.unregister();
+        shouldReload = true;
+      }
+      if (shouldReload && !window.location.search.includes('cleared=1')) {
+        window.location.replace(window.location.pathname + '?cleared=1');
+      }
+    });
+  }
+</script>
+
+
 <!-- LOADER -->
 <div id="loader">
   <div class="stage" id="stage">
