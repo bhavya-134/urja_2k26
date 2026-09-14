@@ -79,7 +79,7 @@ window.GALLERY_FOLDERS = {
       try {
         // Fetch all folders simultaneously for maximum speed
         for (const fId of idsToFetch) {
-          const res = await fetch('/api/gallery?folderId=' + fId);
+          const res = await fetch('/api/gallery?folderId=' + fId + '&t=' + Date.now(), { cache: 'no-store' });
           if (res.ok) {
             const data = await res.json();
             allImages = allImages.concat(data);

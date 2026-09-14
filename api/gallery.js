@@ -42,6 +42,7 @@ export default async function handler(req, res) {
       url: `https://drive.google.com/thumbnail?id=${file.id}&sz=w800`
     }));
 
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     res.status(200).json(images);
   } catch (error) {
     console.error('Drive API Error:', error);
