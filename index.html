@@ -16,17 +16,13 @@
 <body>
 
 <script>
-  // ONE-TIME CACHE NUKE TO FORCE MOBILE PHONES TO UPDATE
+  // NUKE ALL SERVICE WORKERS - NO CACHING
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then(function(registrations) {
-      let shouldReload = false;
-      for(let registration of registrations) {
-        registration.unregister();
-        shouldReload = true;
-      }
-      if (shouldReload && !window.location.search.includes('cleared=2')) {
-        window.location.replace(window.location.pathname + '?cleared=2');
-      }
+      for(let r of registrations) { r.unregister(); }
+    });
+    caches.keys().then(function(names) {
+      for(let name of names) { caches.delete(name); }
     });
   }
 </script>
