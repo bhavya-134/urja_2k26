@@ -173,13 +173,17 @@
           
 
     <div class="hero-inner">
-      <p class="hero-kicker" data-reveal>Department of Electrical Engineering</p>
+      <div class="hero-left">
+        <p class="hero-kicker" data-reveal>Department of Electrical Engineering</p>
       <h1 class="hero-title" data-reveal>
         <span class="ht-urja">URJA</span>
         <span class="ht-year" style="color: var(--blue-l);">2K26</span>
       </h1>
       <p class="hero-tagline" data-reveal>One Spark, Endless Connections</p>
       <p class="hero-date-venue" data-reveal>September 18-19, 2026 &bull; SCET</p>
+        </div>
+
+        <div class="hero-right">
       
       <div class="countdown-wrap" data-reveal>
         <div class="cd-label">TIME UNTIL SIGNAL FIRES</div>
@@ -193,7 +197,9 @@
           <div class="cd-unit"><span id="cd-secs" class="cd-num">--</span><span class="cd-sub">SEC</span></div>
         </div>
         
-        <svg class="synapse-bulb" viewBox="0 0 100 130" fill="none" aria-hidden="true">
+        </div>
+        <div class="hero-bulb-container">
+          <svg class="synapse-bulb" viewBox="0 0 100 130" fill="none" aria-hidden="true">
           <defs>
             <radialGradient id="glass-bg" cx="50%" cy="50%" r="70%">
                 <stop offset="0%" stop-color="rgba(40,40,50,0.3)"/>
@@ -240,6 +246,7 @@
           <line x1="24" y1="36" x2="20" y2="32" stroke="#FFC94A" stroke-width="0.75"/>
         </svg>
           <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN PARTICLES</div>
+        </div>
         <div class="hero-btns" data-reveal>
         <button class="btn-primary btn-ripple" id="hero-cta-btn" onclick="window.URJA.switchTab('events')">EXPLORE EVENTS &rarr;</button>
         <button class="btn-ghost trace-btn" onclick="window.URJA.switchTab('schedule')">
@@ -251,13 +258,15 @@
         </button>
       </div>
 
-      </div>
+      
         <div class="hero-schedule-img" data-reveal onclick="window.URJA.switchTab('schedule')">
         <div class="hsi-label">VIEW MASTER SCHEDULE</div>
         <img src="./URJA TIME TABLE.jpg" alt="Event Schedule" class="hsi-image" onerror="this.src='https://placehold.co/600x320/1a1a1f/F2B33D?text=Master+Schedule'">
       </div>
 
-      <div class="hero-sponsors" data-reveal>
+      
+
+        <div class="hero-sponsors" data-reveal>
         <div class="hs-powered">
           <span>POWERED BY</span>
           <img src="./powered by.jpeg" class="hs-logo" alt="Powered By">
