@@ -152,7 +152,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;color:inhe
 [data-reveal].visible{opacity:1;transform:none;}
 
 /* ===== HERO ===== */
-.hero-section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 24px 120px;position:relative;overflow:hidden;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(58,160,255,.08) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 60%,rgba(255,138,0,.04) 0%,transparent 60%);}
+.hero-section{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px 120px;position:relative;overflow:hidden;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(58,160,255,.08) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 60%,rgba(255,138,0,.04) 0%,transparent 60%);}
 
 .hero-title{font-family:var(--font-head);font-weight:900;font-size:clamp(52px,13vw,100px);letter-spacing:-2px;line-height:.9;margin-bottom:16px;color:var(--blue-l);filter:drop-shadow(0 0 30px rgba(58,160,255,.4));}
 .ht-year{display:block;font-size:.55em;letter-spacing:8px;color:var(--blue-l);background:none;margin-top:8px;}
