@@ -1,4 +1,4 @@
-ï»¿/* URJA 2K26 â€” Synapse: The Pulse Within â€” styles.css */
+/* URJA 2K26 — Synapse: The Pulse Within — styles.css */
 :root{
   --bg:#000000;
   --surface:#0A0A0C;
@@ -911,6 +911,9 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;color:inhe
   position: relative;
   z-index: 1;
   padding-bottom: 30px;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
 }
 .hero-circuit {
   position: absolute;
