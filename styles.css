@@ -172,7 +172,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;color:inhe
 
 .bulb-hint {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px; font-weight: 700;
   color: var(--gold);
   letter-spacing: 2px;
   margin-top: -15px;
@@ -181,7 +181,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;color:inhe
   text-align: center;
 }
 @keyframes pulse-hint {
-  0% { opacity: 0.4; }
+  0% { opacity: 0.65; }
   100% { opacity: 1; text-shadow: 0 0 10px var(--gold); }
 }
 
@@ -505,7 +505,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;color:inhe
   top: 10px;
   text-align: center;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px; font-weight: 700;
   color: var(--gold);
   letter-spacing: 2px;
   z-index: 50;
@@ -878,7 +878,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;color:inhe
     }
     
     .tl-venue { 
-       font-size: 10px; 
+       font-size: 12px; font-weight: 700; 
        background: rgba(255,255,255,0.05); 
        padding: 5px 8px; 
        border-radius: 4px;
@@ -962,7 +962,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;color:inhe
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
+  font-size: 12px; font-weight: 700;
   color: var(--dim);
   border-radius: 4px;
 }
@@ -1256,11 +1256,11 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;color:inhe
 /* ===== TEAMS TOPOLOGY ===== */
 .teams-container { max-width: 800px; margin: 0 auto; padding-bottom: 80px; }
 .team-tier { margin-bottom: 60px; padding: 0 16px; text-align: center; }
-.t-node-label { font-family: var(--font-mono); font-size: 10px; color: var(--amber-l); opacity: 0.7; letter-spacing: 2px; margin-bottom: 16px; text-transform: uppercase; }
+.t-node-label { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--amber-l); opacity: 0.7; letter-spacing: 2px; margin-bottom: 16px; text-transform: uppercase; }
 .t-name { font-family: 'Space Grotesk', sans-serif; color: #fff; font-weight: 600; font-size: 15px; }
 .t-name-xl { font-size: 20px; font-weight: 700; }
 .t-name-lg { font-size: 17px; }
-.t-role { font-family: var(--font-mono); font-size: 10px; color: var(--gold); margin-top: 4px; }
+.t-role { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--gold); margin-top: 4px; }
 .t-gold-dot { width: 10px; height: 10px; background: var(--gold); border-radius: 50%; margin: 0 auto 12px; box-shadow: 0 0 10px var(--gold); }
 .t-gold-dot.lg { width: 10px; height: 10px; }
 .t-dot { width: 4px; height: 4px; background: var(--gold); border-radius: 50%; display: inline-block; margin-right: 8px; opacity: 0.7; vertical-align: middle; }
