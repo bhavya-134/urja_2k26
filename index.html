@@ -68,6 +68,7 @@
   
   <div class="gh-menu-btn" onclick="document.getElementById('gh-menu').style.display = document.getElementById('gh-menu').style.display === 'flex' ? 'none' : 'flex'" style="cursor: pointer; color: #3AA0FF; padding: 10px; z-index: 100000;">
     <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
   </div>
 </header>
 
@@ -88,26 +89,32 @@
 <nav id="dock" aria-label="Main navigation">
   <button class="dock-btn active" data-tab="home" aria-label="Home">
     <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
     <span>HOME</span>
   </button>
   <button class="dock-btn" data-tab="events" aria-label="Events">
     <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
     <span>EVENTS</span>
   </button>
   <button class="dock-btn" data-tab="schedule" aria-label="Schedule">
     <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
     <span>SCHEDULE</span>
   </button>
   <button class="dock-btn" data-tab="gallery" aria-label="Gallery">
     <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
     <span>GALLERY</span>
   </button>
   <button class="dock-btn" data-tab="teams" aria-label="Teams">
     <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
     <span>TEAMS</span>
   </button>
   <button class="dock-btn" data-tab="sponsors" aria-label="Sponsors">
     <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
     <span>SPONSORS</span>
   </button>
 </nav>
@@ -138,6 +145,7 @@
       <path d="M 0 30 L 150 30 L 165 10 L 180 50 L 200 15 L 215 45 L 230 30 L 400 30" fill="none" stroke="rgba(255,138,0,0.15)" stroke-width="0.5" />
       <path class="pulse-path" d="M 0 30 L 150 30 L 165 10 L 180 50 L 200 15 L 215 45 L 230 30 L 400 30" fill="none" stroke="#FFC94A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
     <div id="tl-text">LOADING</div>
   </div>
 </div>
@@ -155,12 +163,14 @@
       <path d="M0,120 L20,120 L30,130 L30,160 L50,180" fill="none" stroke="currentColor" stroke-width="0.5"/>
       <circle cx="50" cy="180" r="1.5" fill="currentColor"/>
     </svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
     <svg class="hero-circuit right" viewBox="0 0 100 200" preserveAspectRatio="none">
       <path d="M100,70 L70,70 L60,80 L60,110 L40,130 L40,150" fill="none" stroke="currentColor" stroke-width="0.5"/>
       <circle cx="40" cy="150" r="1.5" fill="currentColor"/>
       <path d="M100,140 L80,140 L70,150 L70,180 L50,200" fill="none" stroke="currentColor" stroke-width="0.5"/>
       <circle cx="50" cy="200" r="1.5" fill="currentColor"/>
     </svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
 
     <div class="hero-inner">
       <p class="hero-kicker" data-reveal>Department of Electrical Engineering</p>
@@ -178,6 +188,7 @@
           <svg class="btn-trace" viewBox="0 0 100 100" preserveAspectRatio="none">
             <rect x="0" y="0" width="100%" height="100%" fill="none" vector-effect="non-scaling-stroke"></rect>
           </svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
         </button>
       </div>
 
@@ -202,6 +213,14 @@
             <clipPath id="bulb-cp">
               <path d="M50,25 Q72,25 72,47 Q72,62 62,72 L62,85 Q62,90 50,90 Q38,90 38,85 L38,72 Q28,62 28,47 Q28,25 50,25Z"/>
             </clipPath>
+              <filter id="bulb-glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+
               <filter id="particle-glow" x="-50%" y="-50%" width="200%" height="200%">
                 <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur1"/>
                 <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" result="blur2"/>
@@ -216,21 +235,22 @@
           <circle id="bulb-ring" cx="50" cy="50" r="45" stroke="#3AA0FF" stroke-width="0.5" stroke-dasharray="283" stroke-dashoffset="283" opacity="0.3"/>
           <circle id="bulb-ring-active" cx="50" cy="50" r="45" stroke="#3AA0FF" stroke-width="0.5" stroke-dasharray="283" stroke-dashoffset="283" style="transition: stroke-dashoffset 1s ease-out;" />
           
-          <path id="hitbox-path" d="M50,25 Q72,25 72,47 Q72,62 62,72 L62,85 Q62,90 50,90 Q38,90 38,85 L38,72 Q28,62 28,47 Q28,25 50,25Z" fill="rgba(0,0,0,0)" stroke="#3AA0FF" stroke-width="0.75" />
+          <path id="hitbox-path" d="M50,25 Q72,25 72,47 Q72,62 62,72 L62,85 Q62,90 50,90 Q38,90 38,85 L38,72 Q28,62 28,47 Q28,25 50,25Z" fill="rgba(0,0,0,0)" stroke="#FFC94A" filter="url(#bulb-glow)" stroke-width="0.75" />
           
             <!-- Particle layer, isolated from fill -->
                         <!-- Translucent Scrim -->
             <rect id="bulb-scrim" x="0" y="0" width="100" height="130" fill="url(#glass-bg)" clip-path="url(#bulb-cp)" />
 <g id="bulb-particles" clip-path="url(#bulb-cp)" filter="url(#particle-glow)"></g>
           
-          <path d="M42,85 L58,85" stroke="#3AA0FF" stroke-width="0.5" stroke-linecap="round"/>
-          <path d="M44,90 L56,90" stroke="#3AA0FF" stroke-width="0.75" stroke-linecap="round"/>
-          <path d="M48,95 L52,95" stroke="#3AA0FF" stroke-width="0.5" stroke-linecap="round"/>
+          <path d="M42,85 L58,85" stroke="#FFC94A" stroke-width="0.5" stroke-linecap="round"/>
+          <path d="M44,90 L56,90" stroke="#FFC94A" stroke-width="0.75" stroke-linecap="round"/>
+          <path d="M48,95 L52,95" stroke="#FFC94A" stroke-width="0.5" stroke-linecap="round"/>
           
-          <line x1="50" y1="20" x2="50" y2="16" stroke="#3AA0FF" stroke-width="0.75"/>
-          <line x1="76" y1="36" x2="80" y2="32" stroke="#3AA0FF" stroke-width="0.75"/>
-          <line x1="24" y1="36" x2="20" y2="32" stroke="#3AA0FF" stroke-width="0.75"/>
+          <line x1="50" y1="20" x2="50" y2="16" stroke="#FFC94A" stroke-width="0.75"/>
+          <line x1="76" y1="36" x2="80" y2="32" stroke="#FFC94A" stroke-width="0.75"/>
+          <line x1="24" y1="36" x2="20" y2="32" stroke="#FFC94A" stroke-width="0.75"/>
         </svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
       </div>
 
       
@@ -281,6 +301,7 @@
           <!-- Central Synapse -->
           <line x1="50" y1="15" x2="50" y2="85" class="brain-spine" />
         </svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
         <div class="brain-labels">
           <span class="bl-left">NON-TECH</span>
           <span class="bl-center active">ALL EVENTS</span>
@@ -299,7 +320,9 @@
           <circle cx="90" cy="30" r="1" class="circuit-node" />
           <circle cx="70" cy="50" r="1" class="circuit-node" />
         </svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
         <svg id="pcb-lines-svg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
         <div class="events-grid" id="events-grid">
 
       <div data-reveal class="ecard technical" data-cat="technical" data-name="Aavishkar" data-fee="FREE" data-team="Team" data-desc="A project/model exhibition where participants present working, non-working, or simulation-based electrical/technical projects to a jury." data-coord="Alok Das | +91 78599 67939, Jahan | +91 88663 90372" data-link="https://docs.google.com/forms/d/e/1FAIpQLSdyrLT_nRaVsdDl50ek6l_CH_y90Qv2eJFW_4ZUQANLxsZ7ew/viewform?usp=header" data-poster="./FLYERS/aavishkar.jpeg">
@@ -457,18 +480,22 @@
       <div class="tuner-wrap" data-reveal>
         <button class="tuner-btn active" data-tf="all" aria-label="All Events">
           <svg viewBox="0 0 24 24"><path d="M2 12 Q6 2 12 12 T22 12" class="wave-blue"/><path d="M2 12 Q6 22 12 12 T22 12" class="wave-amber"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
           <span>ALL</span>
         </button>
         <button class="tuner-btn" data-tf="technical" aria-label="Technical">
           <svg viewBox="0 0 24 24"><path d="M2 12 Q6 2 12 12 T22 12" class="wave-blue"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
           <span>TECH</span>
         </button>
         <button class="tuner-btn" data-tf="non-technical" aria-label="Non-Technical">
           <svg viewBox="0 0 24 24"><path d="M2 12 Q6 22 12 12 T22 12" class="wave-amber"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
           <span>NON-TECH</span>
         </button>
         <button class="tuner-btn" data-tf="my-circuit" aria-label="My Circuit">
           <svg viewBox="0 0 24 24" style="fill:var(--gold);stroke:none;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
           <span>MY CIRCUIT</span>
         </button>
       </div>
@@ -484,7 +511,8 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card default" data-scat="default" data-id="ev-d1-1">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">TEA AND BREAKFAST</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [PSP LAB]</div>
@@ -497,14 +525,16 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card technical" data-scat="technical" data-id="ev-d1-2">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">ABHIVYAKTI</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-01]</div>
                   </div>
                 </div>
                 <div class="tl-card technical" data-scat="technical" data-id="ev-d1-3">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">AAVISHKAR</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-02]</div>
@@ -517,7 +547,8 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card non-technical" data-scat="non-technical" data-id="ev-d1-4">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">POWER UP</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-03]</div>
@@ -530,7 +561,8 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card technical" data-scat="technical" data-id="ev-d1-5">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">CLASH OF MINDS (ROUND-1)</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-05]</div>
@@ -543,21 +575,24 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card non-technical" data-scat="non-technical" data-id="ev-d1-6">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">ESCAPE THE UNKNOWN</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-106]</div>
                   </div>
                 </div>
                 <div class="tl-card technical" data-scat="technical" data-id="ev-d1-7">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">ROBO SOCCER (R-1)</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [FRONT OF ELECTRICAL DEPT]</div>
                   </div>
                 </div>
                 <div class="tl-card non-technical" data-scat="non-technical" data-id="ev-d1-8">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">LAND OF LUDO</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-103]</div>
@@ -570,7 +605,8 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card technical" data-scat="technical" data-id="ev-d1-9">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">THE QUIZ WHITZ BLITZ (R-1)</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-01]</div>
@@ -583,7 +619,8 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card technical" data-scat="technical" data-id="ev-d1-10">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">GAME OF DRONES (R-1)</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [SCET DOME]</div>
@@ -596,7 +633,8 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card default" data-scat="default" data-id="ev-d1-11">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">LUNCH BREAK</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [CAMPUS]</div>
@@ -609,14 +647,16 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card technical" data-scat="technical" data-id="ev-d1-12">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">SYNC - THE TECH RELAY (R-1)</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-02]</div>
                   </div>
                 </div>
                 <div class="tl-card technical" data-scat="technical" data-id="ev-d1-13">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">F1 ARENA (R-1)</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-01]</div>
@@ -636,7 +676,8 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card default" data-scat="default" data-id="ev-d2-1">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">TEA AND BREAKFAST</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [PSP LAB]</div>
@@ -649,21 +690,24 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card technical" data-scat="technical" data-id="ev-d2-2">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">THE QUIZ WHITZ BLITZ (R-2)</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-01]</div>
                   </div>
                 </div>
                 <div class="tl-card technical" data-scat="technical" data-id="ev-d2-3">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">SYNC - THE TECH RELAY (R-2)</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-02]</div>
                   </div>
                 </div>
                 <div class="tl-card technical" data-scat="technical" data-id="ev-d2-4">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">ROBO SOCCER (R-2)</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [FRONT OF ELECTRICAL DEPT]</div>
@@ -676,7 +720,8 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card non-technical" data-scat="non-technical" data-id="ev-d2-5">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">POWER UP</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-03]</div>
@@ -689,7 +734,8 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card technical" data-scat="technical" data-id="ev-d2-6">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">CLASH OF MINDS (ROUND-2)</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-05]</div>
@@ -702,14 +748,16 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card non-technical" data-scat="non-technical" data-id="ev-d2-7">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">LAND OF LUDO</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-103]</div>
                   </div>
                 </div>
                 <div class="tl-card non-technical" data-scat="non-technical" data-id="ev-d2-8">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">ESCAPE THE UNKNOWN</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-106]</div>
@@ -722,7 +770,8 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card technical" data-scat="technical" data-id="ev-d2-9">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">F1 ARENA (ROUND-2&3)</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-01]</div>
@@ -735,7 +784,8 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card default" data-scat="default" data-id="ev-d2-10">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">LUNCH BREAK</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [CAMPUS]</div>
@@ -748,14 +798,16 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card technical" data-scat="technical" data-id="ev-d2-11">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">ROBO SOCCER (R-3)</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [FRONT OF ELECTRICAL DEPT]</div>
                   </div>
                 </div>
                 <div class="tl-card technical" data-scat="technical" data-id="ev-d2-12">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">GAME OF DRONES (ROUND-2)</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [SCET DOME]</div>
@@ -768,7 +820,8 @@
               <div class="tl-dot"></div>
               <div class="tl-cards">
                 <div class="tl-card default" data-scat="default" data-id="ev-d2-13">
-                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+                  <button class="tl-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div></button>
                   <div class="tl-title">OPEN MIC & PRIZE DISTRIBUTION</div>
                   <div class="tl-details">
                     <div class="tl-venue"><span class="tl-icon">&#x1F4CD;</span> [E-103]</div>
@@ -970,6 +1023,7 @@
             <animate attributeName="stroke-dashoffset" from="1600" to="-1600" dur="6s" repeatCount="indefinite"/>
           </path>
         </svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
       </div>
       <div class="footer-inner">
         <div class="footer-terminal">● TRANSMISSION COMPLETE</div>
@@ -980,6 +1034,7 @@
         
         <a href="https://www.instagram.com/urja2k26" target="_blank" rel="noopener" class="footer-ig" aria-label="Instagram" style="margin: 0 auto 16px;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN</div>
           @urja2k26
         </a>
         
