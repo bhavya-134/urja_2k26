@@ -921,8 +921,7 @@
   }
 
   const prevent = e => e.preventDefault();
-  svg.addEventListener('touchstart', prevent, { passive: false });
-  svg.addEventListener('touchmove', prevent, { passive: false });
+  // Removed touchstart/move blocks so mobile users can still scroll vertically
   svg.addEventListener('contextmenu', prevent);
   svg.addEventListener('selectstart', prevent);
 
