@@ -173,65 +173,70 @@
           
 
     <div class="hero-inner">
-        <p class="hero-kicker" data-reveal>Department of Electrical Engineering</p>
-        <h1 class="hero-title" data-reveal>
-          <span class="ht-urja">URJA</span>
-          <span class="ht-year" style="color: var(--blue-l);">2K26</span>
-        </h1>
-        <p class="hero-tagline" data-reveal>One Spark, Endless Connections</p>
-        <p class="hero-date-venue" data-reveal>September 18-19, 2026 &bull; SCET</p>
         
-        <div class="countdown-wrap" data-reveal>
-          <div class="cd-label">TIME UNTIL SIGNAL FIRES</div>
-          <div class="cd-units">
-            <div class="cd-unit"><span id="cd-days" class="cd-num">--</span><span class="cd-sub">DAYS</span></div>
-            <span class="cd-colon">:</span>
-            <div class="cd-unit"><span id="cd-hours" class="cd-num">--</span><span class="cd-sub">HRS</span></div>
-            <span class="cd-colon">:</span>
-            <div class="cd-unit"><span id="cd-mins" class="cd-num">--</span><span class="cd-sub">MIN</span></div>
-            <span class="cd-colon">:</span>
-            <div class="cd-unit"><span id="cd-secs" class="cd-num">--</span><span class="cd-sub">SEC</span></div>
-          </div>
+        <div class="hero-text-block">
+          <p class="hero-kicker" data-reveal>Department of Electrical Engineering</p>
+          <h1 class="hero-title" data-reveal>
+            <span class="ht-urja">URJA</span>
+            <span class="ht-year" style="color: var(--blue-l);">2K26</span>
+          </h1>
+          <p class="hero-tagline" data-reveal>One Spark, Endless Connections</p>
+          <p class="hero-date-venue" data-reveal>September 18-19, 2026 &bull; SCET</p>
         </div>
         
-        <div class="hero-bulb-container">
-          <svg class="synapse-bulb" viewBox="0 0 100 130" fill="none" aria-hidden="true">
-            <defs>
-              <radialGradient id="glass-bg" cx="50%" cy="50%" r="70%">
-                <stop offset="0%" stop-color="rgba(40,40,50,0.3)"/>
-                <stop offset="100%" stop-color="rgba(15,15,20,0.8)"/>
-              </radialGradient>
-              <clipPath id="bulb-cp">
-                <path d="M50,25 Q72,25 72,47 Q72,62 62,72 L62,85 Q62,90 50,90 Q38,90 38,85 L38,72 Q28,62 28,47 Q28,25 50,25Z"/>
-              </clipPath>
-              <filter id="bulb-glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#FFC94A" flood-opacity="1" />
-                <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#FF8A00" flood-opacity="0.8" />
-                <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#FF8A00" flood-opacity="0.5" />
-              </filter>
-              <filter id="particle-glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur1"/>
-                <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" result="blur2"/>
-                <feMerge>
-                  <feMergeNode in="blur1"/>
-                  <feMergeNode in="blur2"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-            <circle id="bulb-ring" cx="50" cy="50" r="45" stroke="#3AA0FF" stroke-width="1.5" stroke-dasharray="283" stroke-dashoffset="283" opacity="0.3"/>
-            <circle id="bulb-ring-active" cx="50" cy="50" r="45" stroke="#3AA0FF" stroke-width="2.5" stroke-dasharray="283" stroke-dashoffset="283" style="transition: stroke-dashoffset 1s ease-out;" />
-            <path id="hitbox-path" d="M50,25 Q72,25 72,47 Q72,62 62,72 L62,85 Q62,90 50,90 Q38,90 38,85 L38,72 Q28,62 28,47 Q28,25 50,25Z" fill="rgba(0,0,0,0)" stroke="#FFC94A" filter="url(#bulb-glow)" stroke-width="0.75" />
-            <rect id="bulb-scrim" x="0" y="0" width="100" height="130" fill="url(#glass-bg)" clip-path="url(#bulb-cp)" />
-            <g id="bulb-particles" clip-path="url(#bulb-cp)" filter="url(#particle-glow)"></g>
-            <path d="M42,85 L58,85" stroke="#FFC94A" stroke-width="0.5" stroke-linecap="round"/>
-            <path d="M44,90 L56,90" stroke="#FFC94A" stroke-width="0.75" stroke-linecap="round"/>
-            <path d="M48,95 L52,95" stroke="#FFC94A" stroke-width="0.5" stroke-linecap="round"/>
-            <line x1="50" y1="20" x2="50" y2="16" stroke="#FFC94A" stroke-width="0.75"/>
-            <line x1="76" y1="36" x2="80" y2="32" stroke="#FFC94A" stroke-width="0.75"/>
-            <line x1="24" y1="36" x2="20" y2="32" stroke="#FFC94A" stroke-width="0.75"/>
-          </svg>
-          <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN PARTICLES</div>
+        <div class="hero-visual-block">
+          <div class="countdown-wrap" data-reveal>
+            <div class="cd-label">TIME UNTIL SIGNAL FIRES</div>
+            <div class="cd-units">
+              <div class="cd-unit"><span id="cd-days" class="cd-num">--</span><span class="cd-sub">DAYS</span></div>
+              <span class="cd-colon">:</span>
+              <div class="cd-unit"><span id="cd-hours" class="cd-num">--</span><span class="cd-sub">HRS</span></div>
+              <span class="cd-colon">:</span>
+              <div class="cd-unit"><span id="cd-mins" class="cd-num">--</span><span class="cd-sub">MIN</span></div>
+              <span class="cd-colon">:</span>
+              <div class="cd-unit"><span id="cd-secs" class="cd-num">--</span><span class="cd-sub">SEC</span></div>
+            </div>
+          </div>
+          
+          <div class="hero-bulb-container">
+            <svg class="synapse-bulb" viewBox="0 0 100 130" fill="none" aria-hidden="true">
+              <defs>
+                <radialGradient id="glass-bg" cx="50%" cy="50%" r="70%">
+                  <stop offset="0%" stop-color="rgba(40,40,50,0.3)"/>
+                  <stop offset="100%" stop-color="rgba(15,15,20,0.8)"/>
+                </radialGradient>
+                <clipPath id="bulb-cp">
+                  <path d="M50,25 Q72,25 72,47 Q72,62 62,72 L62,85 Q62,90 50,90 Q38,90 38,85 L38,72 Q28,62 28,47 Q28,25 50,25Z"/>
+                </clipPath>
+                <filter id="bulb-glow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#FFC94A" flood-opacity="1" />
+                  <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#FF8A00" flood-opacity="0.8" />
+                  <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#FF8A00" flood-opacity="0.5" />
+                </filter>
+                <filter id="particle-glow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur1"/>
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" result="blur2"/>
+                  <feMerge>
+                    <feMergeNode in="blur1"/>
+                    <feMergeNode in="blur2"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+              <circle id="bulb-ring" cx="50" cy="50" r="45" stroke="#3AA0FF" stroke-width="1.5" stroke-dasharray="283" stroke-dashoffset="283" opacity="0.3"/>
+              <circle id="bulb-ring-active" cx="50" cy="50" r="45" stroke="#3AA0FF" stroke-width="2.5" stroke-dasharray="283" stroke-dashoffset="283" style="transition: stroke-dashoffset 1s ease-out;" />
+              <path id="hitbox-path" d="M50,25 Q72,25 72,47 Q72,62 62,72 L62,85 Q62,90 50,90 Q38,90 38,85 L38,72 Q28,62 28,47 Q28,25 50,25Z" fill="rgba(0,0,0,0)" stroke="#FFC94A" filter="url(#bulb-glow)" stroke-width="0.75" />
+              <rect id="bulb-scrim" x="0" y="0" width="100" height="130" fill="url(#glass-bg)" clip-path="url(#bulb-cp)" />
+              <g id="bulb-particles" clip-path="url(#bulb-cp)" filter="url(#particle-glow)"></g>
+              <path d="M42,85 L58,85" stroke="#FFC94A" stroke-width="0.5" stroke-linecap="round"/>
+              <path d="M44,90 L56,90" stroke="#FFC94A" stroke-width="0.75" stroke-linecap="round"/>
+              <path d="M48,95 L52,95" stroke="#FFC94A" stroke-width="0.5" stroke-linecap="round"/>
+              <line x1="50" y1="20" x2="50" y2="16" stroke="#FFC94A" stroke-width="0.75"/>
+              <line x1="76" y1="36" x2="80" y2="32" stroke="#FFC94A" stroke-width="0.75"/>
+              <line x1="24" y1="36" x2="20" y2="32" stroke="#FFC94A" stroke-width="0.75"/>
+            </svg>
+            <div class="bulb-hint">PRESS &amp; HOLD TO AWAKEN PARTICLES</div>
+          </div>
         </div>
         
         <div class="hero-btns" data-reveal>
@@ -249,7 +254,6 @@
           <img src="./URJA TIME TABLE.jpg" alt="Event Schedule" class="hsi-image" onerror="this.src='https://placehold.co/600x320/1a1a1f/F2B33D?text=Master+Schedule'">
         </div>
       </div> <!-- Closes hero-inner -->
-
       <div class="hero-sponsors" data-reveal>
         <div class="hs-powered">
           <span>POWERED BY</span>
