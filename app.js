@@ -846,7 +846,7 @@
 (function initBulbParticles() {
   const svg = document.querySelector('.synapse-bulb');
   const group = document.getElementById('bulb-particles');
-  const glassPath = document.querySelector('#bulb-cp path');
+  const glassPath = document.querySelector('#hitbox-path');
   if (!svg || !group || !glassPath) return;
 
   const NUM_PARTICLES = 50;
@@ -1010,7 +1010,7 @@
           const dx = pointer.x - p.x, dy = pointer.y - p.y;
           if (dx*dx + dy*dy < 95*95) {
             p.rush = { x: pointer.x, y: pointer.y, until: now + 170, combo: tapCombo, scattered: false };
-            p.el.setAttribute('fill', '#ffffff');
+            p.el.setAttribute('fill', p.baseColor);
           }
         });
       }
@@ -1054,10 +1054,10 @@
         const dx = 50 - p.x, dy = 57 - p.y;
         p.vx += dx * 0.05; p.vy += dy * 0.05;
         p.vx *= 0.85; p.vy *= 0.85;
-        p.el.setAttribute('fill', '#ffffff');
+        p.el.setAttribute('fill', p.baseColor);
       } 
       else if (pointer.state === 'hold') {
-        p.el.setAttribute('fill', '#ffffff');
+        p.el.setAttribute('fill', p.baseColor);
         const holdDur = now - pointer.downTime;
         const strength = Math.max(0, Math.min(1, (holdDur - 350) / 1800));
         
