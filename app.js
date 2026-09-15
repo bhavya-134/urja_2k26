@@ -299,6 +299,21 @@
   const modalBody = document.getElementById('modal-body');
   const circuitFlash = document.getElementById('circuit-flash');
 
+    
+    const eventTimeMapping = {
+      'Aavishkar': 'Day 1: 09:30 AM - 10:30 AM',
+      'F1 Arena': 'Day 1: 01:30 PM - 04:00 PM | Day 2: 12:00 PM - 03:00 PM',
+      'SYNC: The Tech Relay': 'Day 1: 01:30 PM - 04:00 PM | Day 2: 09:30 AM - 10:30 AM',
+      'Power Up': 'Day 1 & 2: 10:00 AM - ONWARDS',
+      'Abhivyakti': 'Day 1: 09:30 AM - 10:30 AM',
+      'Human Ludo': 'Day 1 & 2: 11:00 AM - ONWARDS',
+      'Game of Drones': 'Day 1: 12:00 PM - ONWARDS | Day 2: 01:30 PM - 03:30 PM',
+      'Quiz Whitz Blitz': 'Day 1: 12:00 PM - 01:00 PM | Day 2: 09:30 AM - 10:30 AM',
+      'Escape the Unknown': 'Day 1 & 2: 11:00 AM - ONWARDS',
+      'Clash of Minds': 'Day 1 & 2: 10:30 AM - 12:00 PM',
+      'Robo Soccer': 'Day 1: 11:00 AM - ONWARDS | Day 2: 09:30 AM - 10:30 AM & 01:30 PM - 03:30 PM'
+    };
+
     function openModal(card) {
       const cat = card.dataset.cat || 'technical';
       const fee = card.dataset.fee || 'FREE'; const isFree = fee === 'FREE';
@@ -369,6 +384,31 @@
     setTimeout(() => { modal.hidden = true; }, 400); document.body.style.overflow = '';
   }
   document.querySelectorAll('.ecard').forEach(card => card.addEventListener('click', e => { if (!card.classList.contains('hidden')) openModal(card); }));
+    // Hook up schedule cards to open modals
+    document.querySelectorAll('.tl-card').forEach(tCard => {
+      tCard.style.cursor = 'pointer'; // Make it look clickable
+      tCard.addEventListener('click', () => {
+        const tTitle = tCard.querySelector('.tl-title').innerText.toUpperCase();
+        let targetName = null;
+        if (tTitle.includes('AAVISHKAR')) targetName = 'Aavishkar';
+        else if (tTitle.includes('F1')) targetName = 'F1 Arena';
+        else if (tTitle.includes('SYNC')) targetName = 'SYNC: The Tech Relay';
+        else if (tTitle.includes('POWER')) targetName = 'Power Up';
+        else if (tTitle.includes('ABHIVYAKTI')) targetName = 'Abhivyakti';
+        else if (tTitle.includes('LUDO')) targetName = 'Human Ludo';
+        else if (tTitle.includes('DRONES')) targetName = 'Game of Drones';
+        else if (tTitle.includes('QUIZ')) targetName = 'Quiz Whitz Blitz';
+        else if (tTitle.includes('ESCAPE')) targetName = 'Escape the Unknown';
+        else if (tTitle.includes('CLASH')) targetName = 'Clash of Minds';
+        else if (tTitle.includes('SOCCER')) targetName = 'Robo Soccer';
+        
+        if (targetName) {
+          const matchingCard = Array.from(document.querySelectorAll('.ecard')).find(c => c.dataset.name === targetName);
+          if (matchingCard) openModal(matchingCard);
+        }
+      });
+    });
+
   if (backdrop) backdrop.addEventListener('click', closeModal);
   let mTY = 0;
   if (modal) {
