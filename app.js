@@ -841,18 +841,19 @@
 
 
 
+
 (function initBulbParticles() {
   const svg = document.querySelector('.synapse-bulb');
   const group = document.getElementById('bulb-particles');
   if (!svg || !group) return;
 
-  const NUM_PARTICLES = 45;
+  const NUM_PARTICLES = 50;
   const colors = ['#f5a623', '#5cb8ff'];
   const particles = [];
 
   for (let i = 0; i < NUM_PARTICLES; i++) {
     const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    c.setAttribute('r', (Math.random() * 0.5 + 1).toFixed(1));
+    c.setAttribute('r', (Math.random() * 0.5 + 1.0).toFixed(1));
     const color = colors[i % colors.length];
     c.setAttribute('fill', color);
     group.appendChild(c);
@@ -861,14 +862,14 @@
       el: c,
       x: 30 + Math.random() * 40,
       y: 30 + Math.random() * 50,
-      vx: (Math.random() - 0.5) * 2.0,
-      vy: (Math.random() - 0.5) * 2.0,
+      vx: (Math.random() - 0.5) * 2,
+      vy: (Math.random() - 0.5) * 2,
       baseColor: color,
-      flashUntil: 0
+      rush: null
     });
   }
 
-  const TRAIL_POOL_SIZE = 8;
+  const TRAIL_POOL_SIZE = 12;
   const trailPool = [];
   let trailIdx = 0;
   for (let i = 0; i < TRAIL_POOL_SIZE; i++) {
@@ -876,44 +877,44 @@
     t.setAttribute('r', '1.5');
     t.setAttribute('fill', '#ffffff');
     t.style.opacity = '0';
-    t.style.transition = 'opacity 0.4s ease-out, r 0.4s ease-out';
+    t.style.pointerEvents = 'none';
     group.appendChild(t);
-    trailPool.push({ el: t, activeUntil: 0 });
+    trailPool.push({ el: t });
   }
 
   const pointer = {
-    isDown: false,
-    downTime: 0,
-    downX: 0,
-    downY: 0,
-    x: 50,
-    y: 50,
+    isDown: false, downTime: 0,
+    downX: 0, downY: 0,
+    x: 50, y: 50,
     hasMoved: false,
-    isHolding: false
+    state: 'idle' // idle, drag, hold
   };
+
+  let lastTapTime = 0;
+  let tapCombo = 0;
+  let wind = null;
+  let doublePulse = null;
 
   function getSvgCoords(e) {
     const pt = svg.createSVGPoint();
-    pt.x = e.clientX;
-    pt.y = e.clientY;
+    pt.x = e.clientX || (e.touches && e.touches[0].clientX);
+    pt.y = e.clientY || (e.touches && e.touches[0].clientY);
     return pt.matrixTransform(svg.getScreenCTM().inverse());
   }
 
-  
-  // Forcefully suppress native mobile behaviors (context menus, selection, scrolling)
-  svg.addEventListener('touchstart', (e) => { e.preventDefault(); }, { passive: false });
-  svg.addEventListener('touchmove', (e) => { e.preventDefault(); }, { passive: false });
-  svg.addEventListener('contextmenu', (e) => { e.preventDefault(); });
-  svg.addEventListener('selectstart', (e) => { e.preventDefault(); });
-  
-  svg.addEventListener('pointerdown', (e) => {
+  // Use passive: false to block native behaviors
+  const prevent = e => e.preventDefault();
+  svg.addEventListener('touchstart', prevent, { passive: false });
+  svg.addEventListener('touchmove', prevent, { passive: false });
+  svg.addEventListener('contextmenu', prevent);
+  svg.addEventListener('selectstart', prevent);
 
-    e.preventDefault(); // Stop mobile scrolling just in case touch-action fails
+  svg.addEventListener('pointerdown', (e) => {
     try { svg.setPointerCapture(e.pointerId); } catch(err) {}
     pointer.isDown = true;
     pointer.downTime = Date.now();
     pointer.hasMoved = false;
-    pointer.isHolding = false;
+    pointer.state = 'idle';
     const coords = getSvgCoords(e);
     pointer.x = pointer.downX = coords.x;
     pointer.y = pointer.downY = coords.y;
@@ -922,28 +923,30 @@
   svg.addEventListener('pointermove', (e) => {
     if (!pointer.isDown) return;
     const coords = getSvgCoords(e);
+    const dx = coords.x - pointer.downX;
+    const dy = coords.y - pointer.downY;
+    
+    // Transition to drag if moved > 6px before hold threshold
+    if (!pointer.hasMoved && (dx*dx + dy*dy > 36)) {
+      pointer.hasMoved = true;
+      if (pointer.state !== 'hold') pointer.state = 'drag';
+    }
+    
     pointer.x = coords.x;
     pointer.y = coords.y;
 
-    const dx = pointer.x - pointer.downX;
-    const dy = pointer.y - pointer.downY;
-    if (!pointer.hasMoved && (dx*dx + dy*dy > 64)) {
-      pointer.hasMoved = true;
-    }
-
-    if (pointer.hasMoved) {
+    if (pointer.state === 'drag') {
       const t = trailPool[trailIdx];
       trailIdx = (trailIdx + 1) % TRAIL_POOL_SIZE;
       t.el.style.transition = 'none';
       t.el.setAttribute('cx', pointer.x);
       t.el.setAttribute('cy', pointer.y);
       t.el.setAttribute('r', '1.5');
-      t.el.style.opacity = '0.6';
-      t.activeUntil = Date.now() + 400;
+      t.el.style.opacity = '0.7';
       
       requestAnimationFrame(() => {
         t.el.style.transition = 'opacity 0.4s ease-out, r 0.4s ease-out';
-        t.el.setAttribute('r', '5');
+        t.el.setAttribute('r', '6');
         t.el.style.opacity = '0';
       });
     }
@@ -955,26 +958,47 @@
     const now = Date.now();
     const duration = now - pointer.downTime;
 
-    if (pointer.isHolding) {
+    if (pointer.state === 'hold') {
       console.log('Hold released - EXPLODE!');
       particles.forEach(p => {
-        const dx = p.x - pointer.x;
-        const dy = p.y - pointer.y;
-        p.vx = dx * 0.4 + (Math.random()-0.5)*2;
-        p.vy = dy * 0.4 + (Math.random()-0.5)*2;
+        const dx = p.x - pointer.x, dy = p.y - pointer.y;
+        const dist = Math.hypot(dx, dy) || 1;
+        p.vx = (dx/dist) * 8 + (Math.random()-0.5)*2;
+        p.vy = (dy/dist) * 8 + (Math.random()-0.5)*2;
         p.el.setAttribute('fill', p.baseColor);
-        p.flashUntil = 0;
       });
-    } else if (!pointer.hasMoved && duration < 300) {
-      particles.forEach(p => {
-        p.vx = (pointer.x - p.x) * 0.15;
-        p.vy = (pointer.y - p.y) * 0.15;
-        p.el.setAttribute('fill', '#ffffff');
-        p.flashUntil = now + 150;
-      });
+    } 
+    else if (pointer.state === 'drag' && duration < 400) {
+      // Swipe gesture
+      const vx = (pointer.x - pointer.downX) / duration * 15;
+      const vy = (pointer.y - pointer.downY) / duration * 15;
+      wind = { vx, vy, until: now + 300 };
+    } 
+    else if (!pointer.hasMoved && duration < 300) {
+      // Tap logic
+      if (now - lastTapTime < 350) {
+        tapCombo++;
+      } else {
+        tapCombo = 1;
+      }
+      lastTapTime = now;
+
+      if (tapCombo >= 2) {
+        // Double-tap pulse
+        doublePulse = { step: 'rush', until: now + 250, combo: tapCombo };
+      } else {
+        // Normal tap
+        particles.forEach(p => {
+          const dx = pointer.x - p.x, dy = pointer.y - p.y;
+          if (dx*dx + dy*dy < 95*95) {
+            p.rush = { x: pointer.x, y: pointer.y, until: now + 170, combo: tapCombo, scattered: false };
+            p.el.setAttribute('fill', '#ffffff');
+          }
+        });
+      }
     }
     
-    pointer.isHolding = false;
+    pointer.state = 'idle';
   }
 
   svg.addEventListener('pointerup', releasePointer);
@@ -983,57 +1007,115 @@
   function animate() {
     const now = Date.now();
 
-    if (pointer.isDown && !pointer.hasMoved && (now - pointer.downTime) > 400) {
-      if (!pointer.isHolding) {
-        pointer.isHolding = true;
-        console.log('Hold started!');
+    // Trigger hold seamlessly in loop
+    if (pointer.isDown && pointer.state !== 'hold' && (now - pointer.downTime) > 350) {
+      pointer.state = 'hold';
+      console.log('Hold started!');
+    }
+
+    // Pulse logic
+    if (doublePulse) {
+      if (doublePulse.step === 'rush' && now > doublePulse.until) {
+        doublePulse.step = 'explode';
+        doublePulse.until = now + 400; // time to scatter
+        particles.forEach(p => {
+          const dx = p.x - 50, dy = p.y - 65;
+          const dist = Math.hypot(dx, dy) || 1;
+          const power = 6 * (1 + doublePulse.combo * 0.15);
+          p.vx = (dx/dist) * power;
+          p.vy = (dy/dist) * power;
+          p.el.setAttribute('fill', p.baseColor);
+        });
+      } else if (doublePulse.step === 'explode' && now > doublePulse.until) {
+        doublePulse = null;
       }
     }
 
     particles.forEach(p => {
-      if (p.flashUntil > 0 && now > p.flashUntil) {
-        p.el.setAttribute('fill', p.baseColor);
-        p.flashUntil = 0;
-        p.vx = (Math.random() - 0.5) * 6;
-        p.vy = (Math.random() - 0.5) * 6;
-      }
-
-      if (pointer.isHolding) {
+      // 1. Apply active interactive forces
+      if (doublePulse && doublePulse.step === 'rush') {
+        const dx = 50 - p.x, dy = 65 - p.y;
+        p.vx += dx * 0.05; p.vy += dy * 0.05;
+        p.vx *= 0.85; p.vy *= 0.85;
         p.el.setAttribute('fill', '#ffffff');
-        const dx = pointer.x - p.x;
-        const dy = pointer.y - p.y;
-        
-        p.vx += dx * 0.015 + dy * 0.02;
-        p.vy += dy * 0.015 - dx * 0.02;
-        p.vx *= 0.85;
-        p.vy *= 0.85;
       } 
-      else if (pointer.isDown && pointer.hasMoved) {
+      else if (pointer.state === 'hold') {
+        p.el.setAttribute('fill', '#ffffff');
+        const holdDur = now - pointer.downTime;
+        const strength = Math.max(0, Math.min(1, (holdDur - 350) / 1800));
+        
         const dx = p.x - pointer.x;
         const dy = p.y - pointer.y;
-        const distSq = dx*dx + dy*dy;
-        if (distSq < 250 && distSq > 0.1) {
-          const dist = Math.sqrt(distSq);
-          p.vx += (dx / dist) * 0.3;
-          p.vy += (dy / dist) * 0.3;
-        }
-        p.vx *= 0.95;
-        p.vy *= 0.95;
+        const dist = Math.hypot(dx, dy) || 1;
+        const nx = dx / dist, ny = dy / dist;
+        const tx = -ny, ty = nx; // Tangential clockwise
+        
+        const tangPush = 1.2 + 2.2 * strength;
+        const targetOrbit = Math.max(3, 25 - 20 * strength);
+        const radialPull = (dist - targetOrbit) * 0.06;
+        
+        p.vx += tx * tangPush - nx * radialPull;
+        p.vy += ty * tangPush - ny * radialPull;
+        p.vx *= 0.85; p.vy *= 0.85; // Momentum retention (overlap spirals)
       } 
-      else {
-        p.vx += (Math.random() - 0.5) * 0.25;
-        p.vy += (Math.random() - 0.5) * 0.25;
-        p.vx *= 0.97;
-        p.vy *= 0.97;
+      else if (p.rush) {
+        if (now < p.rush.until) {
+          const dx = p.rush.x - p.x, dy = p.rush.y - p.y;
+          const dist = Math.hypot(dx, dy) || 1;
+          p.vx += (dx/dist) * 3.2;
+          p.vy += (dy/dist) * 3.2;
+          p.vx *= 0.85; p.vy *= 0.85;
+        } else {
+          if (!p.rush.scattered) {
+            p.rush.scattered = true;
+            p.el.setAttribute('fill', p.baseColor);
+            const scatterBase = 3 + Math.random() * 2.5;
+            const scatterSpeed = scatterBase * (1 + p.rush.combo * 0.1);
+            p.vx = (Math.random()-0.5)*2 * scatterSpeed;
+            p.vy = (Math.random()-0.5)*2 * scatterSpeed;
+          } else {
+            p.rush = null; // Clean up
+          }
+        }
+      } 
+      else if (pointer.state === 'drag') {
+        const dx = p.x - pointer.x, dy = p.y - pointer.y;
+        const distSq = dx*dx + dy*dy;
+        if (distSq < 26*26 && distSq > 0.1) {
+          const dist = Math.sqrt(distSq);
+          p.vx += (dx / dist) * 0.9;
+          p.vy += (dy / dist) * 0.9;
+        }
+        // Base idle dampening mixed in below
+      } 
+      
+      // Wind swipe force
+      if (wind && now < wind.until) {
+        p.vx += wind.vx * 0.1;
+        p.vy += wind.vy * 0.1;
+      }
+
+      // 2. Base Idle mechanics (Applies if not overridden by Hold/Rush/Pulse)
+      if (pointer.state !== 'hold' && !p.rush && !(doublePulse && doublePulse.step==='rush')) {
+        // Jitter
+        p.vx += (Math.random() - 0.5) * 0.05;
+        p.vy += (Math.random() - 0.5) * 0.05;
+        
+        // Dampen 90% toward target speed 0.5
+        const speed = Math.hypot(p.vx, p.vy) || 0.001;
+        const newSpeed = speed * 0.9 + 0.5 * 0.1;
+        p.vx = (p.vx / speed) * newSpeed;
+        p.vy = (p.vy / speed) * newSpeed;
       }
 
       p.x += p.vx;
       p.y += p.vy;
 
-      if (p.x < 30) p.vx += 0.2;
-      if (p.x > 70) p.vx -= 0.2;
-      if (p.y < 30) p.vy += 0.2;
-      if (p.y > 85) p.vy -= 0.2;
+      // Soft Glass Boundary (approx SVG coords)
+      if (p.x < 28) p.vx += 0.2;
+      if (p.x > 72) p.vx -= 0.2;
+      if (p.y < 25) p.vy += 0.2;
+      if (p.y > 90) p.vy -= 0.2;
 
       p.el.setAttribute('cx', p.x.toFixed(2));
       p.el.setAttribute('cy', p.y.toFixed(2));
