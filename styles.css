@@ -175,6 +175,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;color:inhe
   color: var(--gold);
   letter-spacing: 2px;
   margin-top: -15px;
+  margin-bottom: 32px;
   animation: pulse-hint 2s infinite alternate;
   pointer-events: none;
   text-align: center;
