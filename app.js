@@ -179,7 +179,7 @@
   //  COUNTDOWN
   // ============================================================
   const FEST = new Date('2026-09-18T09:00:00');
-  const bulbFill = document.getElementById('bulb-fill');
+  
   function updateCountdown() {
     const diff = FEST - new Date();
     const pad = v => String(Math.max(0, Math.floor(v))).padStart(2, '0');
@@ -194,9 +194,7 @@
     const totalMs = 55 * 86400000;
     const pct = Math.min(Math.max(1 - diff / totalMs, 0), 1);
     
-    if (bulbFill) {
-      bulbFill.setAttribute('transform', `translate(0,${(65 - 65 * pct).toFixed(1)}) scale(1,${pct.toFixed(3)})`);
-    }
+    
     const bulbRing = document.getElementById('bulb-ring-active');
     if (bulbRing) {
       const dash = 283;
@@ -842,6 +840,7 @@
 })();
 
 
+
 (function initBulbParticles() {
   const svg = document.querySelector('.synapse-bulb');
   const group = document.getElementById('bulb-particles');
@@ -851,10 +850,9 @@
   const colors = ['#f5a623', '#5cb8ff'];
   const particles = [];
 
-  // Create main particles
   for (let i = 0; i < NUM_PARTICLES; i++) {
     const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    c.setAttribute('r', (Math.random() * 0.5 + 1).toFixed(1)); // 1 to 1.5px
+    c.setAttribute('r', (Math.random() * 0.5 + 1).toFixed(1));
     const color = colors[i % colors.length];
     c.setAttribute('fill', color);
     group.appendChild(c);
@@ -870,7 +868,6 @@
     });
   }
 
-  // Trail pool (reuse objects to avoid per-frame DOM allocation)
   const TRAIL_POOL_SIZE = 8;
   const trailPool = [];
   let trailIdx = 0;
@@ -903,7 +900,8 @@
   }
 
   svg.addEventListener('pointerdown', (e) => {
-    svg.setPointerCapture(e.pointerId);
+    e.preventDefault(); // Stop mobile scrolling just in case touch-action fails
+    try { svg.setPointerCapture(e.pointerId); } catch(err) {}
     pointer.isDown = true;
     pointer.downTime = Date.now();
     pointer.hasMoved = false;
@@ -921,22 +919,20 @@
 
     const dx = pointer.x - pointer.downX;
     const dy = pointer.y - pointer.downY;
-    if (!pointer.hasMoved && (dx*dx + dy*dy > 64)) { // ~8px threshold (in screen/svg relative, SVG is 100 viewbox, so roughly 8 units squared)
+    if (!pointer.hasMoved && (dx*dx + dy*dy > 64)) {
       pointer.hasMoved = true;
     }
 
     if (pointer.hasMoved) {
-      // Spawn trail from pool
       const t = trailPool[trailIdx];
       trailIdx = (trailIdx + 1) % TRAIL_POOL_SIZE;
-      t.el.style.transition = 'none'; // Snap to pos
+      t.el.style.transition = 'none';
       t.el.setAttribute('cx', pointer.x);
       t.el.setAttribute('cy', pointer.y);
       t.el.setAttribute('r', '1.5');
       t.el.style.opacity = '0.6';
       t.activeUntil = Date.now() + 400;
       
-      // Trigger fade next frame
       requestAnimationFrame(() => {
         t.el.style.transition = 'opacity 0.4s ease-out, r 0.4s ease-out';
         t.el.setAttribute('r', '5');
@@ -962,7 +958,6 @@
         p.flashUntil = 0;
       });
     } else if (!pointer.hasMoved && duration < 300) {
-      // Quick Tap
       particles.forEach(p => {
         p.vx = (pointer.x - p.x) * 0.15;
         p.vy = (pointer.y - p.y) * 0.15;
@@ -980,7 +975,6 @@
   function animate() {
     const now = Date.now();
 
-    // In-loop Hold Detection
     if (pointer.isDown && !pointer.hasMoved && (now - pointer.downTime) > 400) {
       if (!pointer.isHolding) {
         pointer.isHolding = true;
@@ -989,29 +983,24 @@
     }
 
     particles.forEach(p => {
-      // Reset flash color
       if (p.flashUntil > 0 && now > p.flashUntil) {
         p.el.setAttribute('fill', p.baseColor);
         p.flashUntil = 0;
-        // Scatter on un-flash (tap resolution)
         p.vx = (Math.random() - 0.5) * 6;
         p.vy = (Math.random() - 0.5) * 6;
       }
 
       if (pointer.isHolding) {
-        // Hold -> Vortex / tighten orbit
         p.el.setAttribute('fill', '#ffffff');
         const dx = pointer.x - p.x;
         const dy = pointer.y - p.y;
         
-        // Swirl mathematics
         p.vx += dx * 0.015 + dy * 0.02;
         p.vy += dy * 0.015 - dx * 0.02;
         p.vx *= 0.85;
         p.vy *= 0.85;
       } 
       else if (pointer.isDown && pointer.hasMoved) {
-        // Drag -> push away gently
         const dx = p.x - pointer.x;
         const dy = p.y - pointer.y;
         const distSq = dx*dx + dy*dy;
@@ -1024,10 +1013,8 @@
         p.vy *= 0.95;
       } 
       else {
-        // Idle Drift
         p.vx += (Math.random() - 0.5) * 0.04;
         p.vy += (Math.random() - 0.5) * 0.04;
-        // Dampen max speed gently
         p.vx *= 0.96;
         p.vy *= 0.96;
       }
@@ -1035,7 +1022,6 @@
       p.x += p.vx;
       p.y += p.vy;
 
-      // Soft Glass Boundary (approximate viewbox coords, clipPath handles precise visual cutoff)
       if (p.x < 30) p.vx += 0.05;
       if (p.x > 70) p.vx -= 0.05;
       if (p.y < 30) p.vy += 0.05;
