@@ -335,7 +335,11 @@
           <div class="modal-title" id="mt-target">${card.dataset.name || ''}</div>
           <div class="modal-poster" id="mp-target"><img src="${card.dataset.poster || ''}" alt="${card.dataset.name}" loading="lazy"></div>
           <div class="modal-desc">${card.dataset.desc || ''}</div>
-          <div class="modal-meta"><span class="modal-meta-lbl">ENTRY FEE</span><span class="badge ${isFree ? 'free' : 'paid'}">${isFree ? 'FREE' : '&#8377;' + fee}</span></div>
+          <div class="modal-meta" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+              <span class="modal-meta-lbl" style="margin-bottom: 2px;">TIME & SCHEDULE</span>
+              <span style="color: var(--gold); font-family: var(--font-mono); font-size: 13px; font-weight: 600;">${eventTimeMapping[card.dataset.name] || 'TBA'}</span>
+            </div>
+            <div class="modal-meta"><span class="modal-meta-lbl">ENTRY FEE</span><span class="badge ${isFree ? 'free' : 'paid'}">${isFree ? 'FREE' : '&#8377;' + fee}</span></div>
           <div class="modal-meta"><span class="modal-meta-lbl">TEAM SIZE</span><span class="badge neutral">${card.dataset.team || 'Solo'}</span></div>
           <div class="modal-meta"><span class="modal-meta-lbl">COORDINATOR</span><div class="modal-coord">${card.dataset.coord || ''}</div></div>
           <button class="modal-reg reg-charge" id="modal-reg-btn">REGISTER NOW &rarr;</button>

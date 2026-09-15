@@ -784,8 +784,8 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;color:inhe
 .tl-slot.in { opacity: 1; transform: translateX(0); }
 
 .tl-time-label { width: 140px; padding-right: 30px; text-align: right; flex-shrink: 0; margin-top: -2px; }
-.start-t { display: block; font-family: var(--font-head); font-size: 16px; font-weight: 700; color: #fff; letter-spacing: 1px; }
-.end-t { display: block; font-family: var(--font-mono); font-size: 11px; color: var(--dim); margin-top: 4px; }
+.start-t { display: block; font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--gold); letter-spacing: 1px; }
+.end-t { display: block; font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--amber-l); margin-top: 2px; }
 
 .tl-dot { position: absolute; left: 140px; top: 5px; transform: translateX(-50%); width: 14px; height: 14px; border-radius: 50%; background: var(--bg); border: 2px solid var(--surface3); z-index: 3; transition: all 0.3s; }
 .tl-slot.fired .tl-dot { border-color: var(--gold); box-shadow: 0 0 15px var(--gold); background: var(--gold); }
