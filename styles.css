@@ -1342,59 +1342,61 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;color:inhe
   margin-bottom: 24px;
 }
 
+
 @media (min-width: 992px) {
-  .hero-section { padding-top: 120px; }
+  .hero-section { padding-top: 100px; }
   
   .hero-inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto auto;
     gap: 0 40px;
     text-align: left;
     max-width: 1100px;
     margin: 0 auto;
-    align-items: start;
+    align-items: center;
   }
   
-  .hero-kicker { grid-column: 1; grid-row: 1; margin-bottom: 12px; }
-  .hero-title  { grid-column: 1; grid-row: 2; margin-bottom: 12px; }
+  /* LEFT SIDE: Text */
+  .hero-kicker { grid-column: 1; grid-row: 1; margin-bottom: 8px; align-self: end; }
+  .hero-title  { grid-column: 1; grid-row: 2; margin-bottom: 8px; }
   .hero-tagline{ grid-column: 1; grid-row: 3; margin-bottom: 8px; }
-  .hero-date-venue { grid-column: 1; grid-row: 4; margin: 0 0 24px 0; }
+  .hero-date-venue { grid-column: 1; grid-row: 4; margin: 0; align-self: start; }
   
+  /* RIGHT SIDE: Timer and Bulb */
   .countdown-wrap { 
-    grid-column: 1; 
-    grid-row: 5; 
-    align-items: flex-start; /* Align left on desktop */
-    margin-bottom: 32px;
-  }
-  
-  .hero-btns { 
-    grid-column: 1 / span 2; 
-    grid-row: 6; 
-    justify-content: center;
-    width: 100%;
-    margin: 40px auto;
+    grid-column: 2; 
+    grid-row: 1 / span 2; 
+    align-self: end;
+    align-items: center; 
+    margin-bottom: 20px;
   }
   
   .hero-bulb-container { 
     grid-column: 2; 
-    grid-row: 1 / span 5; 
+    grid-row: 3 / span 2; 
     justify-self: center; 
-    align-self: center;
+    align-self: start;
     margin-bottom: 0;
+  }
+  
+  /* BOTTOM CENTER: Buttons & Schedule */
+  .hero-btns { 
+    grid-column: 1 / span 2; 
+    grid-row: 5; 
+    justify-content: center;
+    width: 100%;
+    margin: 60px auto 40px;
   }
   
   .hero-schedule-img { 
     grid-column: 1 / span 2; 
-    grid-row: 7; 
+    grid-row: 6; 
     justify-self: center;
     width: 100%;
     max-width: 900px;
-    margin-top: 20px;
+    margin-top: 0;
   }
-  .hero-schedule-img .hsi-image { max-height: none; height: auto; }
   
   .hero-title { font-size: clamp(60px, 8vw, 110px); }
 }
-
-.hero-kicker{font-family:var(--font-mono);font-size:11px;color:var(--amber-l);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;}
