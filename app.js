@@ -842,10 +842,12 @@
 
 
 
+
 (function initBulbParticles() {
   const svg = document.querySelector('.synapse-bulb');
   const group = document.getElementById('bulb-particles');
-  if (!svg || !group) return;
+  const glassPath = document.querySelector('#bulb-cp path');
+  if (!svg || !group || !glassPath) return;
 
   const NUM_PARTICLES = 50;
   const colors = ['#f5a623', '#5cb8ff'];
@@ -887,13 +889,29 @@
     downX: 0, downY: 0,
     x: 50, y: 50,
     hasMoved: false,
-    state: 'idle' // idle, drag, hold
+    state: 'idle',
+    maxVortexRadius: 25
   };
 
   let lastTapTime = 0;
   let tapCombo = 0;
   let wind = null;
   let doublePulse = null;
+  
+  const checkPt = svg.createSVGPoint();
+  const pathLength = glassPath.getTotalLength();
+
+  // Helper: Find closest distance from point to the path border
+  function getDistanceToEdge(px, py) {
+    let minSq = Infinity;
+    for (let l = 0; l <= pathLength; l += 4) {
+      const pt = glassPath.getPointAtLength(l);
+      const dx = pt.x - px, dy = pt.y - py;
+      const sq = dx*dx + dy*dy;
+      if (sq < minSq) minSq = sq;
+    }
+    return Math.sqrt(minSq);
+  }
 
   function getSvgCoords(e) {
     const pt = svg.createSVGPoint();
@@ -902,7 +920,6 @@
     return pt.matrixTransform(svg.getScreenCTM().inverse());
   }
 
-  // Use passive: false to block native behaviors
   const prevent = e => e.preventDefault();
   svg.addEventListener('touchstart', prevent, { passive: false });
   svg.addEventListener('touchmove', prevent, { passive: false });
@@ -918,6 +935,7 @@
     const coords = getSvgCoords(e);
     pointer.x = pointer.downX = coords.x;
     pointer.y = pointer.downY = coords.y;
+    pointer.maxVortexRadius = getDistanceToEdge(pointer.x, pointer.y);
   });
 
   svg.addEventListener('pointermove', (e) => {
@@ -926,14 +944,18 @@
     const dx = coords.x - pointer.downX;
     const dy = coords.y - pointer.downY;
     
-    // Transition to drag if moved > 6px before hold threshold
-    if (!pointer.hasMoved && (dx*dx + dy*dy > 36)) {
+    if (!pointer.hasMoved && (dx*dx + dy*dy > 64)) {
       pointer.hasMoved = true;
       if (pointer.state !== 'hold') pointer.state = 'drag';
     }
     
     pointer.x = coords.x;
     pointer.y = coords.y;
+    
+    // Update dynamic vortex constraint if dragging the hold center
+    if (pointer.state === 'hold') {
+       pointer.maxVortexRadius = getDistanceToEdge(pointer.x, pointer.y);
+    }
 
     if (pointer.state === 'drag') {
       const t = trailPool[trailIdx];
@@ -969,13 +991,11 @@
       });
     } 
     else if (pointer.state === 'drag' && duration < 400) {
-      // Swipe gesture
-      const vx = (pointer.x - pointer.downX) / duration * 15;
-      const vy = (pointer.y - pointer.downY) / duration * 15;
+      const vx = (pointer.x - pointer.downX) / (duration||1) * 15;
+      const vy = (pointer.y - pointer.downY) / (duration||1) * 15;
       wind = { vx, vy, until: now + 300 };
     } 
     else if (!pointer.hasMoved && duration < 300) {
-      // Tap logic
       if (now - lastTapTime < 350) {
         tapCombo++;
       } else {
@@ -984,10 +1004,8 @@
       lastTapTime = now;
 
       if (tapCombo >= 2) {
-        // Double-tap pulse
         doublePulse = { step: 'rush', until: now + 250, combo: tapCombo };
       } else {
-        // Normal tap
         particles.forEach(p => {
           const dx = pointer.x - p.x, dy = pointer.y - p.y;
           if (dx*dx + dy*dy < 95*95) {
@@ -1007,19 +1025,18 @@
   function animate() {
     const now = Date.now();
 
-    // Trigger hold seamlessly in loop
-    if (pointer.isDown && pointer.state !== 'hold' && (now - pointer.downTime) > 350) {
+    if (pointer.isDown && pointer.state !== 'hold' && !pointer.hasMoved && (now - pointer.downTime) > 350) {
       pointer.state = 'hold';
+      pointer.maxVortexRadius = getDistanceToEdge(pointer.x, pointer.y);
       console.log('Hold started!');
     }
 
-    // Pulse logic
     if (doublePulse) {
       if (doublePulse.step === 'rush' && now > doublePulse.until) {
         doublePulse.step = 'explode';
-        doublePulse.until = now + 400; // time to scatter
+        doublePulse.until = now + 400;
         particles.forEach(p => {
-          const dx = p.x - 50, dy = p.y - 65;
+          const dx = p.x - 50, dy = p.y - 57; // 57 is roughly center of mass
           const dist = Math.hypot(dx, dy) || 1;
           const power = 6 * (1 + doublePulse.combo * 0.15);
           p.vx = (dx/dist) * power;
@@ -1032,9 +1049,9 @@
     }
 
     particles.forEach(p => {
-      // 1. Apply active interactive forces
+      // 1. Interactive Forces
       if (doublePulse && doublePulse.step === 'rush') {
-        const dx = 50 - p.x, dy = 65 - p.y;
+        const dx = 50 - p.x, dy = 57 - p.y;
         p.vx += dx * 0.05; p.vy += dy * 0.05;
         p.vx *= 0.85; p.vy *= 0.85;
         p.el.setAttribute('fill', '#ffffff');
@@ -1044,19 +1061,23 @@
         const holdDur = now - pointer.downTime;
         const strength = Math.max(0, Math.min(1, (holdDur - 350) / 1800));
         
-        const dx = p.x - pointer.x;
-        const dy = p.y - pointer.y;
+        const dx = p.x - pointer.x, dy = p.y - pointer.y;
         const dist = Math.hypot(dx, dy) || 1;
         const nx = dx / dist, ny = dy / dist;
-        const tx = -ny, ty = nx; // Tangential clockwise
+        const tx = -ny, ty = nx;
         
         const tangPush = 1.2 + 2.2 * strength;
-        const targetOrbit = Math.max(3, 25 - 20 * strength);
+        
+        // Dynamically clamp orbit radius using real path distance
+        const baseOrbit = 25 - 20 * strength;
+        const maxOrbit = Math.max(1, pointer.maxVortexRadius - 2); // 2px safety padding
+        const targetOrbit = Math.min(baseOrbit, maxOrbit);
+        
         const radialPull = (dist - targetOrbit) * 0.06;
         
         p.vx += tx * tangPush - nx * radialPull;
         p.vy += ty * tangPush - ny * radialPull;
-        p.vx *= 0.85; p.vy *= 0.85; // Momentum retention (overlap spirals)
+        p.vx *= 0.85; p.vy *= 0.85;
       } 
       else if (p.rush) {
         if (now < p.rush.until) {
@@ -1074,7 +1095,7 @@
             p.vx = (Math.random()-0.5)*2 * scatterSpeed;
             p.vy = (Math.random()-0.5)*2 * scatterSpeed;
           } else {
-            p.rush = null; // Clean up
+            p.rush = null;
           }
         }
       } 
@@ -1086,22 +1107,18 @@
           p.vx += (dx / dist) * 0.9;
           p.vy += (dy / dist) * 0.9;
         }
-        // Base idle dampening mixed in below
       } 
       
-      // Wind swipe force
       if (wind && now < wind.until) {
         p.vx += wind.vx * 0.1;
         p.vy += wind.vy * 0.1;
       }
 
-      // 2. Base Idle mechanics (Applies if not overridden by Hold/Rush/Pulse)
+      // 2. Idle Drift
       if (pointer.state !== 'hold' && !p.rush && !(doublePulse && doublePulse.step==='rush')) {
-        // Jitter
         p.vx += (Math.random() - 0.5) * 0.05;
         p.vy += (Math.random() - 0.5) * 0.05;
         
-        // Dampen 90% toward target speed 0.5
         const speed = Math.hypot(p.vx, p.vy) || 0.001;
         const newSpeed = speed * 0.9 + 0.5 * 0.1;
         p.vx = (p.vx / speed) * newSpeed;
@@ -1111,11 +1128,30 @@
       p.x += p.vx;
       p.y += p.vy;
 
-      // Soft Glass Boundary (approx SVG coords)
-      if (p.x < 28) p.vx += 0.2;
-      if (p.x > 72) p.vx -= 0.2;
-      if (p.y < 25) p.vy += 0.2;
-      if (p.y > 90) p.vy -= 0.2;
+      // 3. Absolute Boundary Check (Runs every frame for every particle)
+      checkPt.x = p.x;
+      checkPt.y = p.y;
+      
+      // If particle escaped the real SVG clip path
+      if (!glassPath.isPointInFill(checkPt)) {
+        // Find the vector pointing towards the bulb's center of mass (50, 57)
+        const cx = 50, cy = 57;
+        const dx = cx - p.x;
+        const dy = cy - p.y;
+        const dist = Math.hypot(dx, dy) || 1;
+        
+        // Apply an aggressive restorative force inward along the normal
+        p.vx += (dx / dist) * 1.5;
+        p.vy += (dy / dist) * 1.5;
+        
+        // Hard-clamp the velocity to prevent glitchy wall-hugging vibration
+        p.vx *= 0.6;
+        p.vy *= 0.6;
+        
+        // Immediately nudge the position back inside a bit to avoid getting stuck
+        p.x += p.vx;
+        p.y += p.vy;
+      }
 
       p.el.setAttribute('cx', p.x.toFixed(2));
       p.el.setAttribute('cy', p.y.toFixed(2));
