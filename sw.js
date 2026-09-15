@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = 'urja-2k26-v33';
+﻿const CACHE_NAME = 'urja-2k26-v34';
 const STATIC_ASSETS = [
   '/',
   '/index.html',

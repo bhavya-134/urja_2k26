@@ -861,8 +861,8 @@
       el: c,
       x: 30 + Math.random() * 40,
       y: 30 + Math.random() * 50,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
+      vx: (Math.random() - 0.5) * 2.0,
+      vy: (Math.random() - 0.5) * 2.0,
       baseColor: color,
       flashUntil: 0
     });
@@ -1021,19 +1021,19 @@
         p.vy *= 0.95;
       } 
       else {
-        p.vx += (Math.random() - 0.5) * 0.04;
-        p.vy += (Math.random() - 0.5) * 0.04;
-        p.vx *= 0.96;
-        p.vy *= 0.96;
+        p.vx += (Math.random() - 0.5) * 0.25;
+        p.vy += (Math.random() - 0.5) * 0.25;
+        p.vx *= 0.97;
+        p.vy *= 0.97;
       }
 
       p.x += p.vx;
       p.y += p.vy;
 
-      if (p.x < 30) p.vx += 0.05;
-      if (p.x > 70) p.vx -= 0.05;
-      if (p.y < 30) p.vy += 0.05;
-      if (p.y > 85) p.vy -= 0.05;
+      if (p.x < 30) p.vx += 0.2;
+      if (p.x > 70) p.vx -= 0.2;
+      if (p.y < 30) p.vy += 0.2;
+      if (p.y > 85) p.vy -= 0.2;
 
       p.el.setAttribute('cx', p.x.toFixed(2));
       p.el.setAttribute('cy', p.y.toFixed(2));

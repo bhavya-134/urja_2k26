@@ -67,7 +67,7 @@
   </div>
   
   <div class="gh-menu-btn" onclick="document.getElementById('gh-menu').style.display = document.getElementById('gh-menu').style.display === 'flex' ? 'none' : 'flex'" style="cursor: pointer; color: #3AA0FF; padding: 10px; z-index: 100000;">
-    <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
   </div>
 </header>
 
@@ -135,7 +135,7 @@
   <div class="tl-content">
     <div class="routing-text">TRANSMITTING PULSE</div>
     <svg class="pulse-svg" viewBox="0 0 400 60" preserveAspectRatio="none">
-      <path d="M 0 30 L 150 30 L 165 10 L 180 50 L 200 15 L 215 45 L 230 30 L 400 30" fill="none" stroke="rgba(255,138,0,0.15)" stroke-width="2" />
+      <path d="M 0 30 L 150 30 L 165 10 L 180 50 L 200 15 L 215 45 L 230 30 L 400 30" fill="none" stroke="rgba(255,138,0,0.15)" stroke-width="0.5" />
       <path class="pulse-path" d="M 0 30 L 150 30 L 165 10 L 180 50 L 200 15 L 215 45 L 230 30 L 400 30" fill="none" stroke="#FFC94A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
     <div id="tl-text">LOADING</div>
@@ -213,23 +213,23 @@
               </filter>
 
           </defs>
-          <circle id="bulb-ring" cx="50" cy="50" r="45" stroke="#3AA0FF" stroke-width="1" stroke-dasharray="283" stroke-dashoffset="283" opacity="0.3"/>
-          <circle id="bulb-ring-active" cx="50" cy="50" r="45" stroke="#3AA0FF" stroke-width="2" stroke-dasharray="283" stroke-dashoffset="283" style="transition: stroke-dashoffset 1s ease-out;" />
+          <circle id="bulb-ring" cx="50" cy="50" r="45" stroke="#3AA0FF" stroke-width="0.5" stroke-dasharray="283" stroke-dashoffset="283" opacity="0.3"/>
+          <circle id="bulb-ring-active" cx="50" cy="50" r="45" stroke="#3AA0FF" stroke-width="0.5" stroke-dasharray="283" stroke-dashoffset="283" style="transition: stroke-dashoffset 1s ease-out;" />
           
-          <path d="M50,25 Q72,25 72,47 Q72,62 62,72 L62,85 Q62,90 50,90 Q38,90 38,85 L38,72 Q28,62 28,47 Q28,25 50,25Z" stroke="#3AA0FF" stroke-width="1.5" />
+          <path d="M50,25 Q72,25 72,47 Q72,62 62,72 L62,85 Q62,90 50,90 Q38,90 38,85 L38,72 Q28,62 28,47 Q28,25 50,25Z" stroke="#3AA0FF" stroke-width="0.75" />
           
             <!-- Particle layer, isolated from fill -->
                         <!-- Translucent Scrim -->
             <rect id="bulb-scrim" x="0" y="0" width="100" height="130" fill="url(#glass-bg)" clip-path="url(#bulb-cp)" />
 <g id="bulb-particles" clip-path="url(#bulb-cp)" filter="url(#particle-glow)"></g>
           
-          <path d="M42,85 L58,85" stroke="#3AA0FF" stroke-width="2" stroke-linecap="round"/>
-          <path d="M44,90 L56,90" stroke="#3AA0FF" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M48,95 L52,95" stroke="#3AA0FF" stroke-width="1" stroke-linecap="round"/>
+          <path d="M42,85 L58,85" stroke="#3AA0FF" stroke-width="0.5" stroke-linecap="round"/>
+          <path d="M44,90 L56,90" stroke="#3AA0FF" stroke-width="0.75" stroke-linecap="round"/>
+          <path d="M48,95 L52,95" stroke="#3AA0FF" stroke-width="0.5" stroke-linecap="round"/>
           
-          <line x1="50" y1="20" x2="50" y2="16" stroke="#3AA0FF" stroke-width="1.5"/>
-          <line x1="76" y1="36" x2="80" y2="32" stroke="#3AA0FF" stroke-width="1.5"/>
-          <line x1="24" y1="36" x2="20" y2="32" stroke="#3AA0FF" stroke-width="1.5"/>
+          <line x1="50" y1="20" x2="50" y2="16" stroke="#3AA0FF" stroke-width="0.75"/>
+          <line x1="76" y1="36" x2="80" y2="32" stroke="#3AA0FF" stroke-width="0.75"/>
+          <line x1="24" y1="36" x2="20" y2="32" stroke="#3AA0FF" stroke-width="0.75"/>
         </svg>
       </div>
 
@@ -966,7 +966,7 @@
 <footer id="footer">
       <div class="footer-pulse" aria-hidden="true">
         <svg width="100%" height="30" viewBox="0 0 800 30" preserveAspectRatio="none">
-          <path d="M0,15 Q100,15 140,15 L170,3 L185,27 L200,10 L215,22 L230,15 Q350,15 400,15 Q500,15 530,15 L570,3 L585,27 L600,10 L615,22 L630,15 Q750,15 800,15" fill="none" stroke="#3AA0FF" stroke-width="1" stroke-dasharray="1600" stroke-dashoffset="1600">
+          <path d="M0,15 Q100,15 140,15 L170,3 L185,27 L200,10 L215,22 L230,15 Q350,15 400,15 Q500,15 530,15 L570,3 L585,27 L600,10 L615,22 L630,15 Q750,15 800,15" fill="none" stroke="#3AA0FF" stroke-width="0.5" stroke-dasharray="1600" stroke-dashoffset="1600">
             <animate attributeName="stroke-dashoffset" from="1600" to="-1600" dur="6s" repeatCount="indefinite"/>
           </path>
         </svg>
@@ -979,7 +979,7 @@
         <p class="footer-date">SEPTEMBER 18-19, 2026<br>Sarvajanik College of Engineering & Technology, Surat</p>
         
         <a href="https://www.instagram.com/urja2k26" target="_blank" rel="noopener" class="footer-ig" aria-label="Instagram" style="margin: 0 auto 16px;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           @urja2k26
         </a>
         
