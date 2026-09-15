@@ -340,6 +340,7 @@
             <div class="modal-meta"><span class="modal-meta-lbl">ENTRY FEE</span><span class="badge ${isFree ? 'free' : 'paid'}">${isFree ? 'FREE' : '&#8377;' + fee}</span></div>
           <div class="modal-meta"><span class="modal-meta-lbl">TEAM SIZE</span><span class="badge neutral">${card.dataset.team || 'Solo'}</span></div>
           <div class="modal-meta"><span class="modal-meta-lbl">COORDINATOR</span><div class="modal-coord">${card.dataset.coord || ''}</div></div>
+          ${card.dataset.location ? `<div class="modal-meta"><span class="modal-meta-lbl">LOCATION</span><span style="color:var(--gold);font-family:var(--font-mono);font-size:13px;">${card.dataset.location}</span></div>` : ''}
           <button class="modal-reg reg-charge" id="modal-reg-btn">REGISTER NOW &rarr;</button>
             <button class="modal-close-bottom" id="modal-close-bottom-btn" style="width: auto; padding: 10px 24px; border-radius: 30px; background: transparent; border: 1px solid var(--dim); color: var(--dim); font-family: var(--font-head); font-weight: 600; font-size: 13px; cursor: pointer; margin-top: -4px;">CLOSE DETAILS</button>
         `;
