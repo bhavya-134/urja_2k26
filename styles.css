@@ -1060,7 +1060,18 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;color:inhe
 @keyframes trace-anim {
   to { stroke-dashoffset: -500; }
 }
-.synapse-bulb { width: 220px; height: 286px; cursor: pointer; touch-action: none; margin: 0 auto; display: block; margin-top: 24px; overflow: visible; }
+.synapse-bulb { width: 220px; height: 286px; cursor: pointer; margin: 0 auto; display: block; margin-top: 24px; overflow: visible; }
+
+.synapse-bulb, .synapse-bulb * {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  touch-action: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
 
 /* ===== GLOBAL HEADER ===== */
 #global-header {

@@ -899,7 +899,15 @@
     return pt.matrixTransform(svg.getScreenCTM().inverse());
   }
 
+  
+  // Forcefully suppress native mobile behaviors (context menus, selection, scrolling)
+  svg.addEventListener('touchstart', (e) => { e.preventDefault(); }, { passive: false });
+  svg.addEventListener('touchmove', (e) => { e.preventDefault(); }, { passive: false });
+  svg.addEventListener('contextmenu', (e) => { e.preventDefault(); });
+  svg.addEventListener('selectstart', (e) => { e.preventDefault(); });
+  
   svg.addEventListener('pointerdown', (e) => {
+
     e.preventDefault(); // Stop mobile scrolling just in case touch-action fails
     try { svg.setPointerCapture(e.pointerId); } catch(err) {}
     pointer.isDown = true;
