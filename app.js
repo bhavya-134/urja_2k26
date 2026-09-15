@@ -840,3 +840,172 @@
   
   if (!homeTab.hasAttribute('hidden')) draw();
 })();
+
+
+(function initBulbParticles() {
+  const svg = document.querySelector('.synapse-bulb');
+  const group = document.getElementById('bulb-particles');
+  if (!svg || !group) return;
+
+  const NUM_PARTICLES = 25;
+  const colors = ['#FF8A00', '#FFC94A', '#3AA0FF'];
+  let particles = [];
+
+  for (let i = 0; i < NUM_PARTICLES; i++) {
+    const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c.setAttribute('r', Math.random() * 1.5 + 0.8);
+    const color = colors[i % colors.length];
+    c.setAttribute('fill', color);
+    c.style.transition = 'fill 0.3s ease';
+    group.appendChild(c);
+
+    particles.push({
+      el: c,
+      x: 50 + (Math.random() - 0.5) * 20,
+      y: 60 + (Math.random() - 0.5) * 40,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+      baseColor: color,
+      orbitOffset: Math.random() * Math.PI * 2,
+      orbitSpeed: (Math.random() * 0.08) + 0.02
+    });
+  }
+
+  let pointer = { x: 50, y: 50, active: false, downTime: 0, holdTriggered: false, moved: false };
+  let holdTimer = null;
+  
+  function getSvgCoords(e) {
+    const pt = svg.createSVGPoint();
+    pt.x = e.clientX || (e.touches && e.touches[0].clientX);
+    pt.y = e.clientY || (e.touches && e.touches[0].clientY);
+    return pt.matrixTransform(svg.getScreenCTM().inverse());
+  }
+
+  function onDown(e) {
+    pointer.active = true;
+    pointer.downTime = Date.now();
+    pointer.holdTriggered = false;
+    pointer.moved = false;
+    const coords = getSvgCoords(e);
+    pointer.x = coords.x;
+    pointer.y = coords.y;
+    
+    clearTimeout(holdTimer);
+    holdTimer = setTimeout(() => {
+      if (!pointer.moved && pointer.active) {
+        pointer.holdTriggered = true;
+        particles.forEach(p => p.el.setAttribute('fill', '#FFFFFF'));
+      }
+    }, 1500);
+  }
+
+  function onMove(e) {
+    if (!pointer.active) return;
+    pointer.moved = true;
+    clearTimeout(holdTimer);
+    const coords = getSvgCoords(e);
+    pointer.x = coords.x;
+    pointer.y = coords.y;
+    
+    // Light trail
+    const t = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    t.setAttribute('cx', pointer.x);
+    t.setAttribute('cy', pointer.y);
+    t.setAttribute('r', '1.5');
+    t.setAttribute('fill', '#FFFFFF');
+    t.style.opacity = '0.6';
+    t.style.transition = 'all 0.5s ease-out';
+    group.appendChild(t);
+    requestAnimationFrame(() => {
+      t.style.opacity = '0';
+      t.setAttribute('r', '6');
+    });
+    setTimeout(() => { if(t.parentNode) t.parentNode.removeChild(t); }, 500);
+  }
+
+  function onUp(e) {
+    if (!pointer.active) return;
+    pointer.active = false;
+    clearTimeout(holdTimer);
+    const duration = Date.now() - pointer.downTime;
+    
+    if (pointer.holdTriggered) {
+      // Release from Hold -> Explode
+      particles.forEach(p => {
+        p.vx = (p.x - pointer.x) * 0.4 + (Math.random()-0.5);
+        p.vy = (p.y - pointer.y) * 0.4 + (Math.random()-0.5);
+        p.el.setAttribute('fill', p.baseColor);
+      });
+    } else if (duration < 300 && !pointer.moved) {
+      // Quick Tap -> Rush, flash, scatter
+      particles.forEach(p => {
+        p.vx = (pointer.x - p.x) * 0.15;
+        p.vy = (pointer.y - p.y) * 0.15;
+        p.el.setAttribute('fill', '#FFFFFF');
+        setTimeout(() => {
+          if(!pointer.holdTriggered) p.el.setAttribute('fill', p.baseColor);
+          p.vx = (Math.random() - 0.5) * 6;
+          p.vy = (Math.random() - 0.5) * 6;
+        }, 150);
+      });
+    }
+    pointer.holdTriggered = false;
+  }
+
+  svg.addEventListener('mousedown', onDown);
+  window.addEventListener('mousemove', (e) => { if(pointer.active) onMove(e); });
+  window.addEventListener('mouseup', onUp);
+  
+  svg.addEventListener('touchstart', (e) => { onDown(e); }, {passive: true});
+  window.addEventListener('touchmove', (e) => { if(pointer.active) onMove(e); }, {passive: true});
+  window.addEventListener('touchend', onUp);
+
+  function animate() {
+    particles.forEach(p => {
+      if (pointer.holdTriggered) {
+        // Tightening orbit
+        p.orbitOffset += p.orbitSpeed;
+        const radius = Math.max(3, 20 - (Date.now() - (pointer.downTime + 1500)) * 0.005);
+        const tx = pointer.x + Math.cos(p.orbitOffset) * radius;
+        const ty = pointer.y + Math.sin(p.orbitOffset) * radius;
+        p.vx += (tx - p.x) * 0.08;
+        p.vy += (ty - p.y) * 0.08;
+        p.vx *= 0.82;
+        p.vy *= 0.82;
+      } else if (pointer.active && pointer.moved) {
+        // Drag push away
+        const dx = p.x - pointer.x;
+        const dy = p.y - pointer.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 18) {
+          p.vx += (dx / (dist||1)) * 0.4;
+          p.vy += (dy / (dist||1)) * 0.4;
+        }
+        p.vx *= 0.92;
+        p.vy *= 0.92;
+      } else {
+        // Idle drift
+        p.vx += (Math.random() - 0.5) * 0.03;
+        p.vy += (Math.random() - 0.5) * 0.03;
+        const speed = Math.sqrt(p.vx*p.vx + p.vy*p.vy);
+        if (speed > 0.8) { p.vx *= 0.9; p.vy *= 0.9; }
+      }
+
+      p.x += p.vx;
+      p.y += p.vy;
+
+      // Soft glass boundary bounce (viewBox is 100x130, glass is approx x:28-72, y:25-90)
+      if (p.x < 30) p.vx += 0.05;
+      if (p.x > 70) p.vx -= 0.05;
+      if (p.y < 28) p.vy += 0.05;
+      if (p.y > 88) p.vy -= 0.05;
+
+      p.el.setAttribute('cx', p.x);
+      p.el.setAttribute('cy', p.y);
+    });
+
+    requestAnimationFrame(animate);
+  }
+  
+  animate();
+})();
