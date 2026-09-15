@@ -169,7 +169,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;color:inhe
 .stat-num{display:block;font-family:var(--font-head);font-size:clamp(24px,5vw,36px);font-weight:700;color:var(--gold);}
 .stat-lbl{display:block;font-family:var(--font-mono);font-size:9px;color:var(--dim);letter-spacing:2px;margin-top:2px;}
 .stat-sep{width:1px;height:40px;background:var(--b-gold);}
-.countdown-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.countdown-wrap { padding-bottom: 20px; margin-top: 10px; display:flex;flex-direction:column;align-items:center;gap:12px;}
 .cd-label{font-family:var(--font-mono);font-size:9px;color:var(--dim);letter-spacing:3px;text-transform:uppercase;}
 .cd-units{display:flex;align-items:center;gap:8px;}
 .cd-unit{text-align:center;}
@@ -1060,7 +1060,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;color:inhe
 @keyframes trace-anim {
   to { stroke-dashoffset: -500; }
 }
-.synapse-bulb { width: 160px; height: 208px; cursor: pointer; touch-action: none; margin: 0 auto; display: block; margin-top: 24px; overflow: visible; }
+.synapse-bulb { width: 220px; height: 286px; cursor: pointer; touch-action: none; margin: 0 auto; display: block; margin-top: 24px; overflow: visible; }
 
 /* ===== GLOBAL HEADER ===== */
 #global-header {

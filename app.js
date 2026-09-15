@@ -847,161 +847,202 @@
   const group = document.getElementById('bulb-particles');
   if (!svg || !group) return;
 
-  const NUM_PARTICLES = 25;
-  const colors = ['#FF8A00', '#FFC94A', '#3AA0FF'];
-  let particles = [];
+  const NUM_PARTICLES = 45;
+  const colors = ['#f5a623', '#5cb8ff'];
+  const particles = [];
 
+  // Create main particles
   for (let i = 0; i < NUM_PARTICLES; i++) {
     const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    c.setAttribute('r', Math.random() * 1.5 + 0.8);
+    c.setAttribute('r', (Math.random() * 0.5 + 1).toFixed(1)); // 1 to 1.5px
     const color = colors[i % colors.length];
     c.setAttribute('fill', color);
-    c.style.transition = 'fill 0.3s ease';
     group.appendChild(c);
 
     particles.push({
       el: c,
-      x: 50 + (Math.random() - 0.5) * 20,
-      y: 60 + (Math.random() - 0.5) * 40,
-      vx: (Math.random() - 0.5) * 0.5,
-      vy: (Math.random() - 0.5) * 0.5,
+      x: 30 + Math.random() * 40,
+      y: 30 + Math.random() * 50,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
       baseColor: color,
-      orbitOffset: Math.random() * Math.PI * 2,
-      orbitSpeed: (Math.random() * 0.08) + 0.02
+      flashUntil: 0
     });
   }
 
-  let pointer = { x: 50, y: 50, active: false, downTime: 0, holdTriggered: false, moved: false };
-  let holdTimer = null;
-  
+  // Trail pool (reuse objects to avoid per-frame DOM allocation)
+  const TRAIL_POOL_SIZE = 8;
+  const trailPool = [];
+  let trailIdx = 0;
+  for (let i = 0; i < TRAIL_POOL_SIZE; i++) {
+    const t = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    t.setAttribute('r', '1.5');
+    t.setAttribute('fill', '#ffffff');
+    t.style.opacity = '0';
+    t.style.transition = 'opacity 0.4s ease-out, r 0.4s ease-out';
+    group.appendChild(t);
+    trailPool.push({ el: t, activeUntil: 0 });
+  }
+
+  const pointer = {
+    isDown: false,
+    downTime: 0,
+    downX: 0,
+    downY: 0,
+    x: 50,
+    y: 50,
+    hasMoved: false,
+    isHolding: false
+  };
+
   function getSvgCoords(e) {
     const pt = svg.createSVGPoint();
-    pt.x = e.clientX || (e.touches && e.touches[0].clientX);
-    pt.y = e.clientY || (e.touches && e.touches[0].clientY);
+    pt.x = e.clientX;
+    pt.y = e.clientY;
     return pt.matrixTransform(svg.getScreenCTM().inverse());
   }
 
-  function onDown(e) {
-    pointer.active = true;
+  svg.addEventListener('pointerdown', (e) => {
+    svg.setPointerCapture(e.pointerId);
+    pointer.isDown = true;
     pointer.downTime = Date.now();
-    pointer.holdTriggered = false;
-    pointer.moved = false;
+    pointer.hasMoved = false;
+    pointer.isHolding = false;
+    const coords = getSvgCoords(e);
+    pointer.x = pointer.downX = coords.x;
+    pointer.y = pointer.downY = coords.y;
+  });
+
+  svg.addEventListener('pointermove', (e) => {
+    if (!pointer.isDown) return;
     const coords = getSvgCoords(e);
     pointer.x = coords.x;
     pointer.y = coords.y;
-    
-    clearTimeout(holdTimer);
-    holdTimer = setTimeout(() => {
-      if (!pointer.moved && pointer.active) {
-        pointer.holdTriggered = true;
-        particles.forEach(p => p.el.setAttribute('fill', '#FFFFFF'));
-      }
-    }, 1500);
-  }
 
-  function onMove(e) {
-    if (!pointer.active) return;
-    pointer.moved = true;
-    clearTimeout(holdTimer);
-    const coords = getSvgCoords(e);
-    pointer.x = coords.x;
-    pointer.y = coords.y;
-    
-    // Light trail
-    const t = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    t.setAttribute('cx', pointer.x);
-    t.setAttribute('cy', pointer.y);
-    t.setAttribute('r', '1.5');
-    t.setAttribute('fill', '#FFFFFF');
-    t.style.opacity = '0.6';
-    t.style.transition = 'all 0.5s ease-out';
-    group.appendChild(t);
-    requestAnimationFrame(() => {
-      t.style.opacity = '0';
-      t.setAttribute('r', '6');
-    });
-    setTimeout(() => { if(t.parentNode) t.parentNode.removeChild(t); }, 500);
-  }
+    const dx = pointer.x - pointer.downX;
+    const dy = pointer.y - pointer.downY;
+    if (!pointer.hasMoved && (dx*dx + dy*dy > 64)) { // ~8px threshold (in screen/svg relative, SVG is 100 viewbox, so roughly 8 units squared)
+      pointer.hasMoved = true;
+    }
 
-  function onUp(e) {
-    if (!pointer.active) return;
-    pointer.active = false;
-    clearTimeout(holdTimer);
-    const duration = Date.now() - pointer.downTime;
-    
-    if (pointer.holdTriggered) {
-      // Release from Hold -> Explode
-      particles.forEach(p => {
-        p.vx = (p.x - pointer.x) * 0.4 + (Math.random()-0.5);
-        p.vy = (p.y - pointer.y) * 0.4 + (Math.random()-0.5);
-        p.el.setAttribute('fill', p.baseColor);
+    if (pointer.hasMoved) {
+      // Spawn trail from pool
+      const t = trailPool[trailIdx];
+      trailIdx = (trailIdx + 1) % TRAIL_POOL_SIZE;
+      t.el.style.transition = 'none'; // Snap to pos
+      t.el.setAttribute('cx', pointer.x);
+      t.el.setAttribute('cy', pointer.y);
+      t.el.setAttribute('r', '1.5');
+      t.el.style.opacity = '0.6';
+      t.activeUntil = Date.now() + 400;
+      
+      // Trigger fade next frame
+      requestAnimationFrame(() => {
+        t.el.style.transition = 'opacity 0.4s ease-out, r 0.4s ease-out';
+        t.el.setAttribute('r', '5');
+        t.el.style.opacity = '0';
       });
-    } else if (duration < 300 && !pointer.moved) {
-      // Quick Tap -> Rush, flash, scatter
+    }
+  });
+
+  function releasePointer(e) {
+    if (!pointer.isDown) return;
+    pointer.isDown = false;
+    const now = Date.now();
+    const duration = now - pointer.downTime;
+
+    if (pointer.isHolding) {
+      console.log('Hold released - EXPLODE!');
+      particles.forEach(p => {
+        const dx = p.x - pointer.x;
+        const dy = p.y - pointer.y;
+        p.vx = dx * 0.4 + (Math.random()-0.5)*2;
+        p.vy = dy * 0.4 + (Math.random()-0.5)*2;
+        p.el.setAttribute('fill', p.baseColor);
+        p.flashUntil = 0;
+      });
+    } else if (!pointer.hasMoved && duration < 300) {
+      // Quick Tap
       particles.forEach(p => {
         p.vx = (pointer.x - p.x) * 0.15;
         p.vy = (pointer.y - p.y) * 0.15;
-        p.el.setAttribute('fill', '#FFFFFF');
-        setTimeout(() => {
-          if(!pointer.holdTriggered) p.el.setAttribute('fill', p.baseColor);
-          p.vx = (Math.random() - 0.5) * 6;
-          p.vy = (Math.random() - 0.5) * 6;
-        }, 150);
+        p.el.setAttribute('fill', '#ffffff');
+        p.flashUntil = now + 150;
       });
     }
-    pointer.holdTriggered = false;
+    
+    pointer.isHolding = false;
   }
 
-  svg.addEventListener('mousedown', onDown);
-  window.addEventListener('mousemove', (e) => { if(pointer.active) onMove(e); });
-  window.addEventListener('mouseup', onUp);
-  
-  svg.addEventListener('touchstart', (e) => { onDown(e); }, {passive: true});
-  window.addEventListener('touchmove', (e) => { if(pointer.active) onMove(e); }, {passive: true});
-  window.addEventListener('touchend', onUp);
+  svg.addEventListener('pointerup', releasePointer);
+  svg.addEventListener('pointercancel', releasePointer);
 
   function animate() {
+    const now = Date.now();
+
+    // In-loop Hold Detection
+    if (pointer.isDown && !pointer.hasMoved && (now - pointer.downTime) > 400) {
+      if (!pointer.isHolding) {
+        pointer.isHolding = true;
+        console.log('Hold started!');
+      }
+    }
+
     particles.forEach(p => {
-      if (pointer.holdTriggered) {
-        // Tightening orbit
-        p.orbitOffset += p.orbitSpeed;
-        const radius = Math.max(3, 20 - (Date.now() - (pointer.downTime + 1500)) * 0.005);
-        const tx = pointer.x + Math.cos(p.orbitOffset) * radius;
-        const ty = pointer.y + Math.sin(p.orbitOffset) * radius;
-        p.vx += (tx - p.x) * 0.08;
-        p.vy += (ty - p.y) * 0.08;
-        p.vx *= 0.82;
-        p.vy *= 0.82;
-      } else if (pointer.active && pointer.moved) {
-        // Drag push away
+      // Reset flash color
+      if (p.flashUntil > 0 && now > p.flashUntil) {
+        p.el.setAttribute('fill', p.baseColor);
+        p.flashUntil = 0;
+        // Scatter on un-flash (tap resolution)
+        p.vx = (Math.random() - 0.5) * 6;
+        p.vy = (Math.random() - 0.5) * 6;
+      }
+
+      if (pointer.isHolding) {
+        // Hold -> Vortex / tighten orbit
+        p.el.setAttribute('fill', '#ffffff');
+        const dx = pointer.x - p.x;
+        const dy = pointer.y - p.y;
+        
+        // Swirl mathematics
+        p.vx += dx * 0.015 + dy * 0.02;
+        p.vy += dy * 0.015 - dx * 0.02;
+        p.vx *= 0.85;
+        p.vy *= 0.85;
+      } 
+      else if (pointer.isDown && pointer.hasMoved) {
+        // Drag -> push away gently
         const dx = p.x - pointer.x;
         const dy = p.y - pointer.y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < 18) {
-          p.vx += (dx / (dist||1)) * 0.4;
-          p.vy += (dy / (dist||1)) * 0.4;
+        const distSq = dx*dx + dy*dy;
+        if (distSq < 250 && distSq > 0.1) {
+          const dist = Math.sqrt(distSq);
+          p.vx += (dx / dist) * 0.3;
+          p.vy += (dy / dist) * 0.3;
         }
-        p.vx *= 0.92;
-        p.vy *= 0.92;
-      } else {
-        // Idle drift
-        p.vx += (Math.random() - 0.5) * 0.03;
-        p.vy += (Math.random() - 0.5) * 0.03;
-        const speed = Math.sqrt(p.vx*p.vx + p.vy*p.vy);
-        if (speed > 0.8) { p.vx *= 0.9; p.vy *= 0.9; }
+        p.vx *= 0.95;
+        p.vy *= 0.95;
+      } 
+      else {
+        // Idle Drift
+        p.vx += (Math.random() - 0.5) * 0.04;
+        p.vy += (Math.random() - 0.5) * 0.04;
+        // Dampen max speed gently
+        p.vx *= 0.96;
+        p.vy *= 0.96;
       }
 
       p.x += p.vx;
       p.y += p.vy;
 
-      // Soft glass boundary bounce (viewBox is 100x130, glass is approx x:28-72, y:25-90)
+      // Soft Glass Boundary (approximate viewbox coords, clipPath handles precise visual cutoff)
       if (p.x < 30) p.vx += 0.05;
       if (p.x > 70) p.vx -= 0.05;
-      if (p.y < 28) p.vy += 0.05;
-      if (p.y > 88) p.vy -= 0.05;
+      if (p.y < 30) p.vy += 0.05;
+      if (p.y > 85) p.vy -= 0.05;
 
-      p.el.setAttribute('cx', p.x);
-      p.el.setAttribute('cy', p.y);
+      p.el.setAttribute('cx', p.x.toFixed(2));
+      p.el.setAttribute('cy', p.y.toFixed(2));
     });
 
     requestAnimationFrame(animate);
